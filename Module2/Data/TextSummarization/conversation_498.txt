@@ -1,0 +1,29 @@
+Doctor: Hi, how are you feeling today?
+Patient: Not so good, doctor. I've been having weakness in my arms.
+Doctor: I see. When did it start?
+Patient: It began with pain in my right arm after a shingles shot. Then a few days later, I noticed weakness.
+Doctor: Did you see anyone about it?
+Patient: Yes, a neurologist. They ran tests—MRI, EMG, nerve studies, spinal tap—but couldn’t find a physical cause.
+Doctor: What did they say it was?
+Patient: Possibly a functional disorder. Something like collapsing weakness.
+Doctor: Were you treated?
+Patient: No, but the symptoms went away on their own.
+Doctor: And has it happened again?
+Patient: Yes—about five months later, same thing in the other arm. Again, no treatment, and it went away.
+Doctor: And now the symptoms have stayed?
+Patient: Yes, this time it’s lasted four months, and it’s in both arms.
+Doctor: Got it. Your exam shows weakness in both arms, especially around the shoulders, and some noticeable muscle loss. Your arm reflexes aren’t responding, but your legs seem fine.
+Patient: That doesn’t sound great… what does that mean?
+Doctor: It tells us there’s definitely something affecting the nerves or muscles in your arms. We also found that your sensation is reduced up to the shoulders.
+
+Patient: Yeah, I’ve noticed that. Things feel kind of dull when I touch them.
+Doctor: We repeated your MRI and other tests—your brain, spine, and nerve scans all came back normal.
+Patient: So there’s still no clear cause?
+Doctor: Not yet, but that actually helps rule out some serious conditions.
+Patient: Okay… so what happens next?
+Doctor: I’ll refer you to a specialist for a deeper evaluation. In the meantime, it’s important to stick with physical therapy to keep your strength up.
+Patient: Alright. I’ve been going twice a week.
+Doctor: Good. Keep that up. Do you have any other questions or concerns right now?
+Patient: No, I think that covers it.
+Doctor: Alright—we’ll set up the follow-up and go from there. Take care.
+Patient: Thanks, Doctor.

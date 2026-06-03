@@ -1,0 +1,40 @@
+conversation_14656
+Doctor: Good morning! How are you feeling today?
+Patient: I'm okay, thank you.
+Doctor: Can you tell me what brought you in today?
+Patient: I’m not totally sure—they just said they wanted to run some tests and check a few things out.
+Doctor: I see. Can you tell me a little about your background? Where did you live before?
+Patient: I lived in North Carolina until I was 6 years old.
+Doctor: Okay. Do you have any medical history that might be relevant today?
+Patient: Yes, my birth mother had a history of alcohol abuse during pregnancy, which is in my medical records.
+Doctor: Hmm, I understand. Have you had any growth delays or small head size?
+Patient: No, I haven't had those.
+Doctor: Alright. Any heart problems?
+Patient: No, I haven't had any.
+Doctor: Okay. Your adoptive parents mentioned some emotional and behavioral issues. Let me see your reports.
+Patient: Sure.
+Doctor: Based on your evaluation, we’re seeing a few features that are often linked to FASD—things like wider-set eyes, a smaller jaw, a flatter bridge of the nose, and a thinner upper lip.
+Patient: Oh… okay. What does that mean for me?
+Doctor: You also had a neuropsychiatric and cognitive evaluation. Overall, there were no major concerns, though your attention span came out a bit lower than expected.
+Patient: Alright. I kind of expected that.
+Doctor: The genetic testing didn’t show anything unusual, which helps confirm the FASD diagnosis.
+Patient: I see.
+Doctor: A few months later, you mentioned having some strong heartbeats that came on suddenly—like palpitations, right?
+Patient: Yeah, that’s right. It was kind of scary.
+Doctor: Your heart scan—an echocardiogram—looked normal, except for a small opening in the heart wall called a patent foramen ovale. It’s common and usually not something to worry about.
+Patient: Okay, that’s good to hear.
+Doctor: During a routine ECG, we saw a normal rhythm, but there were some early beats coming from the upper chambers of your heart. That’s what we call PACs.
+
+Patient: What does that mean?
+Doctor: They’re usually harmless, but we kept checking. On your 24-hour heart monitor, you had more of those early beats and some short bursts of fast heart rhythm—nothing dangerous, but something we’ll keep an eye on.
+
+Patient: Got it. So it’s not serious?
+Doctor: Not at this point. We also did a stress test, and there were some fast rhythms and a few unusual beats, but no signs of damage or abnormal recovery.
+
+Patient: Okay. So far, so good?
+Doctor: Yes. And just to be sure, we ran blood tests—everything came back normal, including thyroid, sugar, and electrolytes.
+Patient: That’s a relief.
+Doctor: Since we didn’t find any signs of heart disease and you’re handling the episodes fairly well, we’ll just keep monitoring and adjust only if anything changes.
+Patient: Alright. Thanks for explaining all that.
+Doctor: Of course. If anything feels off or if you have questions, don’t hesitate to reach out.
+Patient: I will. Thank you, doctor.

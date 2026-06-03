@@ -1,0 +1,21 @@
+
+{
+  "HR": {
+    "remote work": "Employees may work remotely up to three days per week, subject to role eligibility and manager approval. Remote work requests must be submitted through the internal HR system at least 48 hours in advance. On-site presence may be required for team meetings, client visits, or critical operations.",
+    "leave policy": "Full-time employees are entitled to 24 days of paid time off (PTO) per calendar year, including vacation and personal days. All PTO must be recorded and approved through the HR portal. Requests should be submitted at least 5 business days in advance, except in emergency situations. Up to 5 unused PTO days may be carried over to the next calendar year.",
+    "dress code": "The company observes a business casual dress code Monday through Thursday. Casual attire is permitted on Fridays. Employees are expected to maintain a professional appearance appropriate to their work environment and responsibilities. More formal attire may be required for client-facing meetings or company events.",
+    "probation policy": "New employees are placed on a 90-day probationary period from their date of hire. During this time, performance and cultural fit are evaluated. Managers may extend probation by up to an additional 30 days if necessary. Successful completion of probation does not guarantee continued employment, but transitions the employee to regular full-time status."
+  },
+  "Finance": {
+    "expense reimbursement": "Employees must submit business expense reports within 30 days of the expense date using the company\u2019s expense management platform. Reimbursable expenses must include itemized receipts and a valid business justification. Expenses submitted beyond the 30-day window may require VP-level approval.",
+    "remote work equipment": "Employees working remotely at least 2 days per week are eligible for reimbursement of up to $500 annually for home office equipment. Eligible items include ergonomic chairs, external monitors, and docking stations. Pre-approval from the employee\u2019s manager is required.",
+    "travel allowance": "For approved business travel, employees may claim reimbursement for meals, lodging, and transportation in accordance with the company\u2019s travel policy. Hotel stays are capped at $250/night, and daily meal reimbursements are limited to $75/day. Airfare must be booked through the company travel portal.",
+    "bonus payout": "Annual performance bonuses are distributed in March, based on the prior fiscal year\u2019s results and individual performance evaluations. Eligibility requires active employment as of the bonus payout date and completion of annual performance reviews."
+  },
+  "IT": {
+    "password reset": "Employees are required to reset their account passwords every 90 days using the self-service portal. Passwords must meet complexity requirements as outlined in the IT Security Policy. Locked accounts can be reset by contacting the IT Service Desk.",
+    "vpn access": "Remote access to company systems requires VPN authorization. Employees must submit a VPN access request through the internal ticketing system. Access is typically provisioned within 24\u201348 business hours following manager approval and completion of security training.",
+    "device replacement": "Company-issued laptops and desktops are eligible for replacement every 4 years or sooner in the event of hardware failure. Employees should submit a device replacement request via the IT Service Portal. Approval is subject to asset evaluation and inventory availability.",
+    "software access": "Requests for licensed software must be submitted through the IT request portal and include business justification. All software access requires manager approval and review by the IT compliance team. Unauthorized software installations are strictly prohibited."
+  }
+}
