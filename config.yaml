@@ -1,0 +1,14 @@
+# This is a sample configuration file for the LLM API server. You can customize it according to your needs.
+model_list:
+  - model_name: groq-llama-3.1-8b-instant # Model Alias to use for requests
+    litellm_params:
+      model: groq/llama-3.1-8b-instant
+      api_key: "os.environ/GROQ_API_KEY" # ensure you have `GROQ_API_KEY` in your .env
+  - model_name: gemini-gemini-3.5-flash # Model Alias to use for requests
+    litellm_params:
+      model: gemini/gemini-3.5-flash
+      api_key: "os.environ/GEMINI_API_KEY" # ensure you have `GEMINI_API_KEY` in your .env
+  - model_name: gemini-gemini-embedding-2 # Model Alias to use for requests
+    litellm_params:
+      model: gemini/gemini-embedding-2
+      api_key: "os.environ/GEMINI_API_KEY" # ensure you have `GEMINI_API_KEY` in your .env

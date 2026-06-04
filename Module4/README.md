@@ -19,10 +19,14 @@ This module covers building intelligent agents that can reason, plan, and use to
 - Observation and refinement loops
 
 ### 3. **03_BuildingToolsReactAgenticAIScratch.ipynb**
-- Building custom tools from scratch
-- Tool composition and chaining
-- Creating domain-specific toolsets
-- Advanced tool orchestration
+- Building the **HealthBuddy** agentic AI system from scratch using ReAct framework
+- Creating custom tools: Web Search, PubMed Search, and Doctor Recommendation
+- Designing state schemas using TypedDict and message management
+- Building LangGraph nodes and edges for agent orchestration
+- Implementing multi-step reasoning and tool-use loops
+- Vector database integration with ChromaDB for semantic search
+- Streaming agent output and debugging tool invocations
+- Understanding agent limitations and multi-turn conversation challenges
 
 ### 4. **04_BuildingMultiUserConversationalAgenticAI.ipynb**
 - Multi-user conversation management
@@ -45,18 +49,29 @@ Thought → Action → Observation → Thought → ... → Final Answer
 
 ### Agent Loop
 1. **Input**: User query or task
-2. **Thought**: Agent reasons about the problem
-3. **Action**: Agent selects and executes tools
-4. **Observation**: Agent processes tool output
-5. **Repeat** until task is complete
-6. **Output**: Final response
+2. **Thought**: Agent reasons about the problem using system instructions
+3. **Action**: Agent selects and executes appropriate tools
+4. **Observation**: Agent processes tool output and refines response
+5. **Repeat** until task is complete or answer is ready
+6. **Output**: Final response with reasoning explanation
+
+### HealthBuddy System
+The module progressively builds **HealthBuddy**, a healthcare assistant that:
+- Answers health queries by searching web and PubMed databases
+- Recommends appropriate doctors based on symptoms
+- Manages multi-turn conversations with context awareness
+- Coordinates multiple specialized agents
+- Handles multi-user interactions with isolated memory contexts
 
 ## Key Technologies
 
 - **LangChain and LangGraph**: Agent framework, graph orchestration, and execution
-- **OpenAI or Azure OpenAI**: LLM access
-- **Tool Definitions**: Structured tool specifications
+- **OpenAI or compatible models**: LLM access via OpenAI-compatible API
+- **ChromaDB**: Vector database for semantic search and retrieval
+- **Tool Definitions**: Structured tool specifications with @tool decorator
+- **State Management**: TypedDict and message handling for agent state
 - **Memory Systems**: Conversation and context management
+- **MLflow**: Tracing and monitoring for model calls and chains
 
 ## Learning Objectives
 

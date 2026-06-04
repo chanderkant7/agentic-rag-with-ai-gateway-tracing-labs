@@ -96,7 +96,15 @@ AI engineering is becoming less about one magical prompt and more about systems:
 
 Module 1 is where we slow down just enough to build that system-thinking muscle.
 
-In the next post, we will unpack LLM foundations without the hype.
+## Next Steps
+
+The next post dives into LLM foundations: tokens, prompts, context windows, and why these concepts shape every application you build.
+
+→ **[Read: Module 1.1 – LLM Foundations Without the Hype](part-1.md)**
+
+---
+
+**Questions or feedback?** Let me know how the labs feel as you progress through them. AI engineering is as much about learning-by-doing as it is about reading.
 
 ## Feedback
 

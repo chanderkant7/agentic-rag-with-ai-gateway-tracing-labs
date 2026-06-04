@@ -45,13 +45,13 @@ This is the point where LLM apps start looking like real enterprise systems.
 Module 3 uses these Python notebooks:
 
 ```text
-Module3/Module2/01_Read Pdf File.ipynb
-Module3/Module2/02_DataChunking.ipynb
-Module3/Module2/03_DocumentEmbeddings.ipynb
-Module3/Module2/04_ChromaDB Data Retrieval and Re-ranking in RAG.ipynb
-Module3/Module2/05_TalkToData.ipynb
-Module3/Module5/RAG_Evaluation_SinglePDF.ipynb
-Module3/Module5/RAG_Evaluation_MultiplePDF.ipynb
+Module3/Part1/01_Read Pdf File.ipynb
+Module3/Part1/02_DataChunking.ipynb
+Module3/Part1/03_DocumentEmbeddings.ipynb
+Module3/Part1/04_ChromaDB Data Retrieval and Re-ranking in RAG.ipynb
+Module3/Part1/05_TalkToData.ipynb
+Module3/Part2/RAG_Evaluation_SinglePDF.ipynb
+Module3/Part2/RAG_Evaluation_MultiplePDF.ipynb
 ```
 
 The shape of the RAG workflow is visible in `Module3/Module2/05_TalkToData.ipynb`:

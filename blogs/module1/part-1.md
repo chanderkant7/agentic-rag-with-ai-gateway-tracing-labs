@@ -91,7 +91,7 @@ This is a practical engineering tradeoff. If your manager asks why the same inpu
 
 ## Providers and API Keys
 
-Modern LLM apps often use OpenAI, Azure OpenAI, or other providers through APIs. That means your notebook or app needs credentials, endpoints, deployment names, and sometimes model-specific configuration.
+Modern LLM apps often use OpenAI,  OpenAI, or other providers through APIs. That means your notebook or app needs credentials, endpoints, deployment names, and sometimes model-specific configuration.
 
 The repo keeps credentials in `.env` and expects each module setup to install the right dependencies. That separation matters. Code should not hard-code secrets, and notebooks should not depend on whoever ran them last from whichever folder.
 

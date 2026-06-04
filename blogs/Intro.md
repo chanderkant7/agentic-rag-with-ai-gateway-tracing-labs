@@ -38,7 +38,7 @@ The repo and blog series use a modern Python-based AI stack:
 - **Jupyter notebooks** for hands-on labs
 - **OpenAI Python SDK** for model calls
 - **LiteLLM AI Gateway** for routing OpenAI-compatible calls across providers
-- **Azure OpenAI** where enterprise-style endpoint configuration is useful
+- - **OpenAI-compatible APIs** for enterprise and gateway routing scenarios
 - **LangChain** for LLM and RAG orchestration
 - **LangChain Community** for document loaders and vector store integrations
 - **LangChain Text Splitters** for document chunking
@@ -118,16 +118,16 @@ Use these notebook names when you want to jump from a Medium article into runnab
 
 ```text
 Module2/01_OpenAI_Connection.ipynb
-Module2/02_Prompt_Ebginnering.ipynb
-Module2/03_Seniment_Analysis.ipynb
+Module2/02_Prompt_Engineering.ipynb
+Module2/03_Sentiment_Analysis.ipynb
 Module2/04_Text_Summarization.ipynb
-Module3/Module2/01_Read Pdf File.ipynb
-Module3/Module2/02_DataChunking.ipynb
-Module3/Module2/03_DocumentEmbeddings.ipynb
-Module3/Module2/04_ChromaDB Data Retrieval and Re-ranking in RAG.ipynb
-Module3/Module2/05_TalkToData.ipynb
-Module3/Module5/RAG_Evaluation_SinglePDF.ipynb
-Module3/Module5/RAG_Evaluation_MultiplePDF.ipynb
+Module3/Part1/01_Read Pdf File.ipynb
+Module3/Part1/02_DataChunking.ipynb
+Module3/Part1/03_DocumentEmbeddings.ipynb
+Module3/Part1/04_ChromaDB Data Retrieval and Re-ranking in RAG.ipynb
+Module3/Part1/05_TalkToData.ipynb
+Module3/Part2/RAG_Evaluation_SinglePDF.ipynb
+Module3/Part2/RAG_Evaluation_MultiplePDF.ipynb
 Module4/01_ImplementingToolsForAgenticAI.ipynb
 Module4/02_BuildingToolsReactAgenticAIBuiltin.ipynb
 Module4/03_BuildingToolsReactAgenticAIScratch.ipynb

@@ -6,52 +6,52 @@ This advanced module covers RAG systems using ChromaDB for vector storage and re
 
 ## Module Structure
 
-### Module 2: Document Processing & Embeddings
+### Part 1: Document Processing & Embeddings
 
-#### **DataChunking.ipynb**
-- Chunking strategies (fixed-size, recursive, semantic)
-- Handling overlapping chunks
-- Optimizing chunk size for retrieval
-- Preserving context in chunks
+#### **01_Read Pdf File.ipynb**
+- PDF parsing and extraction techniques
+- Handling different PDF formats and encodings
+- Text extraction and preprocessing
+- Metadata preservation and handling
 
-#### **DocumentEmbeddings.ipynb**
-- Generating embeddings with various models
-- Embedding quality and dimensionality
-- Storing embeddings in ChromaDB
-- Vector similarity search
+#### **02_DataChunking.ipynb**
+- Chunking strategies: fixed-size, recursive, and semantic
+- Handling overlapping chunks for context preservation
+- Optimizing chunk size for retrieval effectiveness
+- Balancing context window and retrieval precision
 
-#### **Read Pdf File.ipynb**
-- PDF parsing and extraction
-- Handling different PDF formats
-- Text extraction and cleaning
-- Metadata preservation
+#### **03_DocumentEmbeddings.ipynb**
+- Generating embeddings with various models (OpenAI, HuggingFace, etc.)
+- Understanding embedding quality and dimensionality
+- Storing embeddings in ChromaDB vector database
+- Vector similarity search and retrieval
 
-#### **TalkToData.ipynb**
-- Interactive chat with document data
-- Real-time retrieval and generation
-- Conversation history management
-- Context-aware responses
+#### **04_ChromaDB Data Retrieval and Re-ranking in RAG.ipynb**
+- ChromaDB setup, configuration, and client operations
+- Advanced retrieval techniques (similarity, MMR, filtering)
+- Re-ranking retrieved documents for relevance
+- Hybrid search combining multiple retrieval strategies
+- Performance optimization and collection management
 
-#### **ChromaDB Data Retrieval and Re-ranking in RAG.ipynb**
-- ChromaDB setup and configuration
-- Advanced retrieval techniques
-- Re-ranking retrieved documents
-- Filtering and hybrid search
-- Performance optimization
+#### **05_TalkToData.ipynb**
+- Interactive chat interface with document data
+- Real-time retrieval and response generation
+- Conversation history management and context
+- Context-aware multi-turn interactions
 
-### Module 5: RAG Evaluation
+### Part 2: RAG Evaluation
 
 #### **RAG_Evaluation_SinglePDF.ipynb**
-- Evaluating RAG with single document
-- Retrieval precision and recall
-- Generation quality metrics
-- Consistency checks
+- Evaluating RAG performance with single document
+- Computing retrieval metrics (precision, recall, MRR)
+- Assessing generation quality (BLEU, ROUGE, exact match)
+- Consistency and hallucination detection
 
 #### **RAG_Evaluation_MultiplePDF.ipynb**
-- Handling multiple document sources
+- Handling and evaluating multiple document sources
 - Cross-document retrieval accuracy
-- Handling conflicting information
-- Scalability testing
+- Managing conflicting or complementary information
+- Scalability testing and performance benchmarking
 
 #### **LLMTestcases.py**
 - Automated test frameworks
@@ -68,12 +68,16 @@ This advanced module covers RAG systems using ChromaDB for vector storage and re
 
 ## Learning Objectives
 
+- Parse and process various document formats (PDF, text)
+- Implement effective document chunking strategies
+- Generate and manage embeddings at scale
+- Master ChromaDB operations and vector search
 - Implement production-ready RAG systems
-- Master vector database operations
-- Optimize retrieval performance
-- Evaluate RAG system quality
-- Handle multi-document scenarios
-- Scale RAG to large datasets
+- Evaluate RAG system quality comprehensively
+- Optimize retrieval and ranking performance
+- Handle multi-document RAG scenarios
+- Debug and improve retrieval accuracy
+- Scale RAG to large document collections
 
 ## Running the Notebooks
 
@@ -123,6 +127,18 @@ Open the MLflow UI at `http://127.0.0.1:5000`. Module 3 notebooks create separat
 
 If the server is not running, the setup helper skips experiment selection and the notebook continues. You can also override the tracking URI by setting `MLFLOW_TRACKING_URI` before running a notebook.
 
+## Key Concepts
+
+- **Document Chunking**: Breaking documents into manageable pieces while preserving context
+- **Embeddings**: Dense vector representations capturing semantic meaning
+- **Vector Search**: Finding similar documents using embedding similarity
+- **ChromaDB**: Persistent and in-memory vector database for embeddings
+- **Re-ranking**: Sorting retrieved documents by relevance
+- **Hybrid Search**: Combining multiple retrieval strategies (BM25 + semantic)
+- **Retrieval Metrics**: Measuring retrieval quality (precision, recall, MRR, NDCG)
+- **Generation Quality**: Evaluating LLM outputs (BLEU, ROUGE, exact match)
+- **Hallucination Detection**: Identifying false or unsupported claims
+
 ## Data
 
 - `Data/` - Contains sample PDFs and documents for processing
@@ -137,4 +153,4 @@ If the server is not running, the setup helper skips experiment selection and th
 
 ## Next Steps
 
-Complete Module 4 to learn how to build intelligent agents using tools and RAG systems together.
+Complete **Module 4: Agentic AI** to learn how to build intelligent agents using tools and RAG systems together.

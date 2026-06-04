@@ -83,7 +83,7 @@ uv pip install -r Project/project/2/requirements.txt -c Project/project/2/constr
 
 2. **Configure Credentials**
    - Add API keys to `.env` file
-   - Ensure OpenAI or Azure OpenAI credentials are available for the notebook cells you run
+   - Ensure OpenAI or  OpenAI credentials are available for the notebook cells you run
 
 3. **Run Validation**
 ```bash
@@ -134,9 +134,9 @@ Generate Report
 ## Key Technologies
 
 - **LangChain and LangGraph**: Agent framework and graph orchestration
-- **OpenAI or Azure OpenAI**: LLM access
+- **OpenAI or compatible models**: LLM access via OpenAI-compatible API
 - **Pandas**: Data analysis and CSV handling
-- **ChromaDB and rank-bm25**: Retrieval support
+- **ChromaDB and rank-bm25**: Retrieval and ranking support
 - **MLflow**: Local tracing for model and chain calls
 - **JSON**: Data storage and configuration
 
@@ -144,9 +144,40 @@ Current key package pins include `openai==2.40.0`, `httpx==0.28.1`, `pandas==2.3
 
 ## LiteLLM AI Gateway
 
-The sample project notebook reads gateway-aware settings from `.env`, including `OPENAI_BASE_URL`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME`. Use `USE_LITELLM=1` and `LITELLM_MASTER_KEY` from the root `.env.example` when routing validation-agent calls through a LiteLLM AI Gateway.
+The project notebook reads gateway-aware settings from `.env`, including `OPENAI_BASE_URL`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME`. Use `USE_LITELLM=1` and `LITELLM_MASTER_KEY` from the root `.env.example` when routing validation-agent calls through a LiteLLM AI Gateway.
 
 ## MLflow and Paths
+
+Each notebook has an `Initial setup` cell that enables tracing through `Module1/notebook_utils.py` via `setup_mlflow_tracing(...)`. Data paths use `repo_path(...)` for consistency across environments.
+
+Start MLflow from the repository root before running notebooks if you want traces captured:
+
+```bash
+mlflow server \
+  --host 127.0.0.1 \
+  --port 5000 \
+  --backend-store-uri sqlite:///mlflow.db \
+  --default-artifact-root ./mlruns
+```
+
+Open the MLflow UI at `http://127.0.0.1:5000`. Project notebooks create separate experiments under `llm-rag-agents-gateway-labs/Project/<notebook-name>`.
+
+## Key Concepts
+
+- **Multi-Agent Orchestration**: Coordinating multiple specialized agents
+- **Tool Integration**: Using retrieval and lookup tools effectively
+- **ReAct Framework**: Structuring agent reasoning and action cycles
+- **Performance Evaluation**: Benchmarking against human validators
+- **Error Analysis**: Understanding agent failure modes
+- **Reproducibility**: Tracking runs with MLflow
+
+## Prerequisites
+
+- Completion of Modules 1-4
+- Understanding of RAG systems (Module 3)
+- Experience with agent development (Module 4)
+- API keys for LLM access
+- Local MLflow server (optional but recommended)
 
 The project notebook has an `Initial setup` cell that enables tracing through `Module1/notebook_utils.py` via `setup_mlflow_tracing(...)`. File paths use `repo_path(...)`, which avoids duplicated folder names when the notebook working directory changes.
 
