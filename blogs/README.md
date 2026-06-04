@@ -1,4 +1,4 @@
-# Medium Blog Series: RAG and Agentic AI Labs
+# RAG and Agentic AI Labs
 
 This folder contains Medium.com-ready blog drafts for the lab series. The tone is practical, warm, and conversational, aimed at India-based tech learners, engineers, and builders who want to move from LLM basics to RAG, agents, and a capstone validation project without feeling lost in jargon.
 
@@ -53,11 +53,31 @@ The blog drafts use diagrams and architecture images from `blogs/assets/`. When 
 
 ## Medium.com Publishing Notes
 
-- Suggested tags: `AI`, `LangChain`, `RAG`, `MLflow`, `Generative AI`
-- Mention the LiteLLM AI Gateway setup when publishing technical intros: `USE_LITELLM=1`, `OPENAI_BASE_URL`, `LITELLM_MASTER_KEY`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME`.
-- Publish in the order below so the "Previous" and "Next" links can be replaced with live Medium URLs as each post goes up.
-- Medium supports Markdown paste reasonably well, but review code blocks and headings after pasting.
-- Keep each post's first paragraph punchy; Medium previews usually pull from the opening text.
-- Use the `Subtitle:` line as Medium's subtitle and remove that label after pasting if you prefer a cleaner post.
-- Use the `Tags:` line as the tag source and remove that line from the final Medium body.
-- Relative links work inside the repo only. Replace them with published Medium links from [chanderkant-sharma.medium.com](https://chanderkant-sharma.medium.com) after each post goes live.
+### Pre-Publishing Checklist
+- **Tags**: Use the tags from each post's YAML header. Primary tags: `Generative AI`, `RAG`, `LangChain`, `MLflow`, `AI Agents`, `LiteLLM`
+- **Subtitle**: Each post has a `Subtitle:` line—use it and remove the label
+- **Images**: Verify all images load from GitHub raw URLs or replace with Medium-hosted versions
+- **Code Blocks**: Review formatting after pasting into Medium
+- **Links**: All relative repo links will need to be replaced with live Medium URLs after publication
+
+### Publishing Order
+Follow this sequence so "Previous" and "Next" navigation stays correct:
+
+1. [Main Intro: RAG and Agentic AI Labs](Intro.md)
+2. [Module 1 Intro](module1/intro.md) → [Part 1](module1/part-1.md) → [Part 2](module1/part-2.md)
+3. [Module 2 Intro](module2/intro.md) → [Part 1](module2/part-1.md) → [Part 2](module2/part-2.md)
+4. [Module 3 Intro](module3/intro.md) → [Part 1](module3/part-1.md) → [Part 2](module3/part-2.md)
+5. [Module 4 Intro](module4/intro.md) → [Part 1](module4/part-1.md) → [Part 2](module4/part-2.md)
+6. [Project Intro](project/intro.md) → [Part 1](project/part-1.md) → [Part 2](project/part-2.md)
+
+### Formatting Guidelines
+- **First paragraph**: Keep punchy—Medium shows this in previews
+- **Code examples**: Include context about which notebook the code comes from
+- **AI Gateway note**: Include in all technical posts (already embedded)
+- **Call-to-action**: End with a question or reflection specific to each topic
+- **Links back**: Consider linking to the full repository at the end
+
+### After Publication
+- Replace all Medium.com author links with live post URLs: [chanderkant-sharma.medium.com](https://chanderkant-sharma.medium.com)
+- Update navigation links between posts with live Medium URLs
+- Update repo's [.env.example](.env.example) with any new configuration examples

@@ -2,15 +2,17 @@
 
 ## Overview
 
-This module covers foundational Large Language Model (LLM) concepts before the hands-on RAG and Agentic AI labs in later modules. The repository currently contains documentation for Module 1; executable notebook labs begin in Module 2.
+This module covers foundational Large Language Model (LLM) concepts, provider integration, and the lab environment setup before hands-on RAG and Agentic AI labs in Modules 2-4. The repository contains documentation and utility functions for later modules; executable notebook labs begin in Module 2.
 
 ## Learning Objectives
 
-- Understand how LLMs work
-- Understand the lab environment used by later modules
-- Learn provider integration concepts
-- Build simple LLM applications
-- Understand prompting and model behavior
+- Understand how LLMs work at a conceptual level
+- Learn the lab environment and infrastructure used by later modules
+- Understand provider integration and API authentication
+- Build simple LLM applications using LangChain
+- Master prompting techniques and model behavior control
+- Set up development environments and dependencies
+- Configure and use MLflow for tracing
 
 ## Getting Started
 
@@ -22,7 +24,13 @@ source .venv/bin/activate  # Linux/macOS
 .venv\Scripts\activate     # Windows
 ```
 
-2. Configure API keys in a `.env` file at the repository root.
+2. Configure API keys in a `.env` file at the repository root (copy from `.env.example`):
+```env
+OPENAI_API_KEY="sk-xxxxxxxx"
+OPENAI_BASE_URL="https://api.openai.com/v1"
+CHAT_MODEL_NAME="gpt-4o-mini"
+EMBEDDING_MODEL_NAME="text-embedding-3-small"
+```
 
 3. Continue to Module 2 for the first executable lab notebooks and run `Module2/.setup/learner_setup.ipynb` before those labs.
 
@@ -30,14 +38,39 @@ source .venv/bin/activate  # Linux/macOS
 
 - Python 3.10+ recommended
 - Basic Python knowledge
-- API key for at least one LLM provider, with OpenAI or Azure OpenAI recommended for later notebooks
+- API key for at least one LLM provider (OpenAI recommended)
+- Familiarity with terminal/command line
+- Jupyter Notebook or VS Code environment
 
-## What You'll Learn
+## Module Contents
 
-- **LLM Fundamentals**: Transformers, tokens, context windows
-- **LangChain Basics**: Prompts, model calls, retrieval, and agent concepts
-- **Provider Setup**: API keys, endpoints, and environment variables
-- **Simple Applications**: Chatbots, Q&A systems, text generation
+This module provides foundational knowledge and utilities:
+
+- **Concepts**: How LLMs work, tokens, context windows, model behavior
+- **LangChain Basics**: Prompts, model calls, chains, retrieval basics
+- **Provider Setup**: Authentication, API keys, environment variables
+- **Utilities**: `notebook_utils.py` with `repo_path()` and `setup_mlflow_tracing()`
+- **Simple Applications**: Basic chatbots, Q&A systems, text generation examples
+
+## Key Concepts
+
+- **Tokens**: Discrete units of text processed by LLMs
+- **Context Window**: Maximum number of tokens an LLM can process
+- **Embeddings**: Dense vector representations of text
+- **Prompt Engineering**: Crafting inputs to get desired outputs
+- **Chain of Thought**: Encouraging step-by-step reasoning
+- **Few-Shot Learning**: Providing examples to guide behavior
+- **Temperature & Sampling**: Controlling randomness in outputs
+
+## Utilities
+
+The `Module1/notebook_utils.py` provides helper functions used across all modules:
+
+- `repo_path(...)`: Construct paths relative to repository root (supports any working directory)
+- `setup_mlflow_tracing(...)`: Configure MLflow tracing with proper experiment naming
+- Environment loading and variable management
+
+These utilities ensure notebooks work correctly regardless of where they're opened from.
 
 ## MLflow Tracing
 

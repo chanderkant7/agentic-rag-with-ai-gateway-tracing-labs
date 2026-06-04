@@ -68,7 +68,7 @@ def query_llm(prompt_messages, max_tokens=4096, temperature=1.0, top_p=1.0):
     return {"text": response.choices[0].message.content}
 ```
 
-`Module2/02_Prompt_Ebginnering.ipynb` then reuses the same function for prompt experiments:
+`Module2/02_Prompt_Engineering.ipynb` then reuses the same function for prompt experiments:
 
 ```python
 query = "My invoice for order #1234 seems incorrect. Can you clarify the charges?"

@@ -12,17 +12,17 @@ This module introduces core LLM workflows and early RAG-adjacent patterns using 
 - Testing basic completion requests
 - Understanding API response structures
 
-### 2. **02_Prompt_Ebginnering.ipynb**
-- Crafting effective prompts
-- Few-shot learning techniques
-- Temperature and parameter tuning
-- Prompt optimization strategies
+### 2. **02_Prompt_Engineering.ipynb**
+- Crafting effective prompts for LLMs
+- Few-shot learning and chain-of-thought techniques
+- Temperature, top_p, and parameter tuning
+- Prompt optimization strategies and anti-patterns
 
-### 3. **03_Seniment_Analysis.ipynb**
+### 3. **03_Sentiment_Analysis.ipynb**
 - Building sentiment classifiers with LLMs
-- Using Patient_Reviews.csv dataset
-- Multi-class sentiment classification
-- Real-world NLP application
+- Using Patient_Reviews.csv dataset for real-world classification
+- Multi-class sentiment classification (positive, negative, neutral)
+- Evaluation metrics for classification tasks
 
 ### 4. **04_Text_Summarization.ipynb**
 - Abstractive and extractive summarization
@@ -37,11 +37,14 @@ This module introduces core LLM workflows and early RAG-adjacent patterns using 
 
 ## Learning Objectives
 
-- Understand RAG fundamentals and use cases
-- Retrieve and rank relevant documents
-- Integrate retrieval with LLM generation
-- Handle different data formats (text, CSV)
-- Evaluate RAG system performance
+- Set up OpenAI-compatible API clients and authentication
+- Master prompt engineering techniques for better LLM outputs
+- Build text classification systems using LLMs
+- Implement summarization pipelines with context awareness
+- Handle different data formats (text files, CSV)
+- Integrate retrieval patterns into generation workflows
+- Understand API response structures and error handling
+- Evaluate output quality and refine prompts iteratively
 
 ## Prerequisites
 
@@ -102,10 +105,13 @@ If the server is not running, the setup helper skips experiment selection and th
 
 ## Key Concepts
 
-- **Retrieval**: Finding relevant documents from a corpus
-- **Context Window**: Using retrieved documents as context
-- **Ranking**: Scoring document relevance
-- **Generation**: Creating response using retrieved context
+- **API Integration**: Authentication, rate limiting, and error handling with OpenAI-compatible endpoints
+- **Prompt Design**: Structuring prompts for better model behavior and output quality
+- **Few-Shot Learning**: Providing examples to guide model behavior
+- **Classification**: Using LLMs for text categorization and sentiment analysis
+- **Summarization**: Creating concise summaries while preserving key information
+- **Context Windows**: Understanding token limits and managing input length
+- **Temperature & Sampling**: Controlling randomness and determinism in outputs
 
 ## Next Steps
 

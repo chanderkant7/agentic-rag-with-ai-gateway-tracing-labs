@@ -6,9 +6,10 @@ This repository contains notebook-based labs for LLM application development, RA
 
 ### Prerequisites
 - Python 3.10+ recommended
-- API keys for the providers used in each lab, usually OpenAI, Azure OpenAI, or models routed through LiteLLM
+- API keys for LLM providers (OpenAI, Groq, OpenRouter, etc.)
 - Jupyter or a notebook environment that supports `%pip`
 - Optional: a local MLflow tracking server for traces
+- Optional: LiteLLM AI Gateway for multi-provider routing
 
 ### Create an Environment
 
@@ -65,6 +66,35 @@ USE_LITELLM=1
 
 See [`.env.example`](.env.example) for the current template.
 
+## Module Overview
+
+### Learning Progression
+
+This repository is structured as a progressive learning path from foundational LLM concepts through advanced agentic systems:
+
+**Module 1 → Module 2 → Module 3 → Module 4 → Project**
+
+Each module builds on the previous, introducing new concepts and techniques incrementally.
+
+### Module 1: Foundations
+Foundation concepts including LLM fundamentals, LangChain basics, and provider setup for Module 2-4 labs. Provides utilities (`repo_path()`, `setup_mlflow_tracing()`) used across all modules.
+
+### Module 2: RAG Basics
+Introduction to OpenAI-compatible APIs, prompt engineering, sentiment analysis, and text summarization using retrieval-augmented generation patterns. First executable notebooks with basic LLM applications.
+
+### Module 3: Advanced RAG with ChromaDB
+Deep dive into document processing, embeddings, vector storage with ChromaDB, retrieval ranking, and comprehensive RAG evaluation techniques for single and multiple documents. Builds production-ready RAG systems.
+
+### Module 4: Agentic AI
+Building intelligent agents using the ReAct framework with LangGraph. Progressively construct **HealthBuddy**, a healthcare assistant that demonstrates:
+- Tool-use agents with web/PubMed search and doctor recommendations
+- Multi-user conversational AI with session management
+- Multi-agent systems with inter-agent communication
+- Advanced reasoning and decision-making patterns
+
+### Project: Insurance Agent Validation
+End-to-end implementation of an intelligent insurance validation agent with multi-agent coordination, performance comparison against human validators, and comprehensive metrics reporting.
+
 ## LiteLLM AI Gateway
 
 The notebooks use OpenAI-compatible client settings, so they can call either a direct provider endpoint or a LiteLLM AI Gateway. When `USE_LITELLM=1`, use:
@@ -74,7 +104,7 @@ The notebooks use OpenAI-compatible client settings, so they can call either a d
 - `CHAT_MODEL_NAME` for chat/completion calls
 - `EMBEDDING_MODEL_NAME` for embedding calls
 
-This lets the same notebook code switch between providers such as OpenAI-compatible, Groq, OpenRouter, or Azure-style deployments through a gateway configuration instead of rewriting notebook logic.
+This lets the same notebook code switch between providers such as OpenAI-compatible, Groq, OpenRouter, or similar deployments through a gateway configuration instead of rewriting notebook logic.
 
 ## MLflow Tracing
 
@@ -144,10 +174,40 @@ End-to-end project implementing an intelligent insurance validation agent:
 
 ## Resources
 
-- [LangChain Docs](https://python.langchain.com/)
-- [MLflow Docs](https://mlflow.org/docs/latest/)
-- [OpenAI Python SDK](https://github.com/openai/openai-python)
-- [uv Package Manager](https://github.com/astral-sh/uv)
+- [LangChain Docs](https://python.langchain.com/) - Agent and RAG framework
+- [LangGraph Docs](https://langchain-ai.github.io/langgraph/) - Graph-based orchestration
+- [MLflow Docs](https://mlflow.org/docs/latest/) - Tracing and monitoring
+- [OpenAI Python SDK](https://github.com/openai/openai-python) - LLM access
+- [ChromaDB Docs](https://docs.trychroma.com/) - Vector database
+- [uv Package Manager](https://github.com/astral-sh/uv) - Fast Python packaging
+- [LiteLLM Docs](https://docs.litellm.ai/) - Multi-provider routing
+
+## Overall Goals
+
+This repository aims to provide a comprehensive learning experience for building production-quality LLM applications:
+
+1. **Foundation**: Understand LLM concepts and basic integration
+2. **Retrieval**: Master RAG systems for context-aware generation
+3. **Intelligence**: Build reasoning agents that use tools effectively
+4. **Scale**: Implement multi-agent systems for complex tasks
+5. **Evaluation**: Benchmark agent performance against human baselines
+6. **Flexibility**: Support multiple LLM providers through LiteLLM gateway
+
+By completing this progression, learners will be equipped to:
+- Design and implement LLM applications from scratch
+- Build production-ready RAG systems
+- Create intelligent agents with tool use
+- Evaluate and optimize system performance
+- Route requests through multiple providers
+- Monitor and trace system behavior
+
+## Getting Started
+
+1. Read the [README](blogs/README.md) in `blogs/` for conceptual learning
+2. Follow the module progression starting with Module 1
+3. Run each module's setup notebook before its lab notebooks
+4. Configure your `.env` file with API keys
+5. Start with Module 2 for first executable code
 
 ## License
 
