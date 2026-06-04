@@ -59,7 +59,7 @@ Each executable module has a setup notebook. Run the matching setup notebook bef
 
 The setup notebooks install the pinned packages for that module and then restart the notebook kernel.
 
-## Optional Services
+## Local Services
 
 ### LiteLLM AI Gateway
 
