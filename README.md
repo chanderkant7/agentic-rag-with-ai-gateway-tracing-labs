@@ -36,6 +36,47 @@ Each module has its own setup notebook and pinned dependency set. Start a module
 
 Those setup notebooks install from the matching `requirements.txt` and `constraints.txt` files under each module or project package directory.
 
+### Quick LiteLLM AI Gateway Setup
+To set up the LiteLLM AI Gateway with the Admin UI and Master Key locally without Docker, follow these exact steps.
+## Prerequisites
+You must have a PostgreSQL database running locally on your machine. LiteLLM requires it to track user spend, virtual keys, and UI configurations.
+------------------------------
+## Step 1: Install LiteLLM
+Install the proxy server package using python pip:
+
+pip install 'litellm[proxy]'
+
+## Step 2: Create config.yaml
+Create a configuration file to link your upstream models and your database.
+
+model_list:
+  - model_name: gpt-4o
+    litellm_params:
+      model: openai/gpt-4o
+      api_key: "os.environ/OPENAI_API_KEY"
+general_settings:
+  master_key: "sk-master-key-1234" # 🔑 Admin key to lock down the API
+  database_url: "postgresql://<user>:<password>@localhost:5432/<db_name>" # Your local Postgres URI
+
+## Step 3: Export Environment Variables
+Set your model provider keys and your UI login credentials in your terminal session:
+
+# Provider API Keys
+export OPENAI_API_KEY="your-actual-openai-key"
+# Admin UI Login Credentials
+export UI_USERNAME="admin"
+export UI_PASSWORD="your-secure-password"
+
+## Step 4: Run the Gateway
+Launch the server. LiteLLM will automatically initialize the required tables in your PostgreSQL database:
+
+litellm --config config.yaml
+
+------------------------------
+## Step 5: Test and Access
+
+* Admin UI Dashboard: Open your web browser and log in at http://localhost:4000/ui using your username and password.
+
 ### Quick MLflow Setup
 
 MLflow is installed by the Module2, Module3, Module4, and Project setup notebooks. Start a local tracking server before running lab notebooks if you want traces:
