@@ -1,87 +1,82 @@
 # RAG and Agentic AI using LangChain, LiteLLM AI Gateway, and MLflow
 
-This repository contains notebook-based labs for LLM application development, RAG systems, agentic AI, LiteLLM AI Gateway routing, and an insurance validation project. The active lab notebooks now use per-module dependency files, repository-relative paths, and optional localhost MLflow tracing.
+This repository is a notebook-based learning path for building LLM applications, retrieval-augmented generation (RAG) systems, tool-using agents, multi-agent workflows, and a healthcare insurance claim approval capstone. The labs use OpenAI-compatible clients, optional LiteLLM AI Gateway routing, repository-relative file paths, and optional localhost MLflow tracing.
 
-## Quick Setup
+## Quick Start
 
 ### Prerequisites
+
 - Python 3.10+ recommended
-- API keys for LLM providers (OpenAI, Groq, OpenRouter, etc.)
-- Jupyter or a notebook environment that supports `%pip`
-- Optional: a local MLflow tracking server for traces
+- Jupyter Notebook, JupyterLab, or VS Code notebooks
+- An API key for an OpenAI-compatible chat model
+- An embedding model key for the RAG labs
 - Optional: LiteLLM AI Gateway for multi-provider routing
+- Optional: MLflow for local trace collection
 
 ### Create an Environment
 
-**Linux/macOS:**
+Linux/macOS:
+
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
 uv venv .venv
 source .venv/bin/activate
 ```
 
-**Windows:**
+Windows:
+
 ```bash
 powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 uv venv .venv
 .venv\Scripts\activate
 ```
 
-Each module has its own setup notebook and pinned dependency set. Start a module by running its setup notebook:
+### Configure Credentials
 
-- `Module2/.setup/learner_setup.ipynb`
-- `Module3/.setup/learner_setup.ipynb`
-- `Module4/.setup/learner_setup.ipynb`
-- `Project/.setup/learner_setup.ipynb`
+Copy [`.env.example`](.env.example) to `.env` and update the values for your provider or gateway:
 
-Those setup notebooks install from the matching `requirements.txt` and `constraints.txt` files under each module or project package directory.
+```env
+OPENAI_API_KEY="sk-xxxxxxxx"
+OPENAI_BASE_URL="http://127.0.0.1:4000"
+CHAT_MODEL_NAME="groq/llama-3.1-8b-instant"
+EMBEDDING_MODEL_NAME="openrouter/openai/text-embedding-3-small"
+LITELLM_MASTER_KEY="sk-xxxxxxxx"
+STORE_MODEL_IN_DB=True
+```
 
-### Quick LiteLLM AI Gateway Setup
-To set up the LiteLLM AI Gateway with the Admin UI and Master Key locally without Docker, follow these exact steps.
+For direct provider access, omit `OPENAI_BASE_URL` if your SDK should use its default endpoint. For LiteLLM, point `OPENAI_BASE_URL` at the running gateway.
 
-#### Prerequisites
+### Install Lab Dependencies
 
-#### You must have a PostgreSQL database running locally on your machine. LiteLLM requires it to track user spend, virtual keys, and UI configurations.
-------------------------------
-#### Step 1: Install LiteLLM
-Install the proxy server package using python pip:
+Each executable module has a setup notebook. Run the matching setup notebook before starting that module:
 
+| Area | Setup notebook | Manual dependency bundle |
+| --- | --- | --- |
+| Module 2 | `Module2/.setup/learner_setup.ipynb` | `Module2/module2/2/shim.txt` |
+| Module 3 | `Module3/.setup/learner_setup.ipynb` | `Module3/.setup/module3/2/shim.txt` |
+| Module 4 | `Module4/.setup/learner_setup.ipynb` | `Module4/module4/2/shim.txt` |
+| Project | `Project/.setup/learner_setup.ipynb` | `Project/project/2/shim.txt` |
+
+The setup notebooks install the pinned packages for that module and then restart the notebook kernel.
+
+## Optional Services
+
+### LiteLLM AI Gateway
+
+The notebooks read `OPENAI_API_KEY`, `OPENAI_BASE_URL`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME` from `.env`, so the same code can call a direct provider or a LiteLLM gateway.
+
+A sample gateway config is provided in [config.yaml](config.yaml). Start a local gateway with:
+
+```bash
 pip install 'litellm[proxy]'
+litellm --config config.yaml --port 4000
+```
 
-#### Step 2: Create config.yaml
-Create a configuration file to link your upstream models and your database.
+Export any provider keys referenced by your gateway config, such as `GROQ_API_KEY` or `GEMINI_API_KEY`.
 
-model_list:
-  - model_name: gpt-4o
-    litellm_params:
-      model: openai/gpt-4o
-      api_key: "os.environ/OPENAI_API_KEY"
-general_settings:
-  master_key: "sk-master-key-1234" # 🔑 Admin key to lock down the API
-  database_url: "postgresql://<user>:<password>@localhost:5432/<db_name>" # Your local Postgres URI
+### MLflow Tracing
 
-#### Step 3: Export Environment Variables
-Set your model provider keys and your UI login credentials in your terminal session:
-
-#### Provider API Keys
-export OPENAI_API_KEY="your-actual-openai-key"
-#### Admin UI Login Credentials
-export UI_USERNAME="admin"
-export UI_PASSWORD="your-secure-password"
-
-#### Step 4: Run the Gateway
-Launch the server. LiteLLM will automatically initialize the required tables in your PostgreSQL database:
-
-litellm --config config.yaml
-
-------------------------------
-## Step 5: Test and Access
-
-* Admin UI Dashboard: Open your web browser and log in at http://localhost:4000/ui using your username and password.
-
-### Quick MLflow Setup
-
-MLflow is installed by the Module2, Module3, Module4, and Project setup notebooks. Start a local tracking server before running lab notebooks if you want traces:
+The executable notebooks call `setup_mlflow_tracing(...)` from [Module1/notebook_utils.py](Module1/notebook_utils.py). Start MLflow from the repository root if you want traces:
 
 ```bash
 mlflow server \
@@ -91,155 +86,69 @@ mlflow server \
   --default-artifact-root ./mlruns
 ```
 
-Open the MLflow UI at `http://127.0.0.1:5000`. The notebooks use this URL by default and create separate experiments per notebook.
+Open the MLflow UI at `http://127.0.0.1:5000`. If the server is not running, the notebooks skip experiment selection and continue.
 
-### Configure API Keys and AI Gateway
+## Learning Path
 
-Create a `.env` file in the project root. For direct OpenAI-compatible access, define your provider key. For LiteLLM AI Gateway access, route calls through `OPENAI_BASE_URL` and set model names through environment variables:
+| Step | Area | Focus |
+| --- | --- | --- |
+| 1 | [Module 1: Foundations](Module1/README.md) | LLM concepts, environment setup, provider configuration, and shared notebook utilities |
+| 2 | [Module 2: LLM Workflow Basics](Module2/README.md) | OpenAI-compatible clients, prompt engineering, patient sentiment analysis, and clinical dialogue summarization |
+| 3 | [Module 3: Advanced RAG with ChromaDB](Module3/README.md) | PDF loading, chunking, embeddings, ChromaDB retrieval, reranking, chat-over-docs, and DeepEval RAG evaluation |
+| 4 | [Module 4: Agentic AI](Module4/README.md) | Tool calling, ReAct agents, HealthBuddy, multi-user conversation memory, appointment booking, and multi-agent SOP assistance |
+| 5 | [Project: Healthcare Insurance Claim Approval Agent](Project/README.md) | ReAct-based claim approval, policy reasoning, validation against human references, and submission generation |
 
-```env
-LITELLM_MASTER_KEY="sk-xxxxxxxx"
-OPENAI_API_KEY="sk-xxxxxxxx"
-OPENAI_ADMIN_KEY="sk-xxxxxxxx"
-OPENAI_BASE_URL="http://0.0.0.0:4000"
-CHAT_MODEL_NAME="groq/openai/gpt-oss-20b"
-EMBEDDING_MODEL_NAME="openrouter/openai/text-embedding-3-small"
-USE_LITELLM=1
-```
+## Notebook Map
 
-See [`.env.example`](.env.example) for the current template.
+### Module 2
 
-## Module Overview
+- [01_OpenAI_Connection.ipynb](Module2/01_OpenAI_Connection.ipynb) - configure and test OpenAI-compatible chat and embedding clients.
+- [02_Prompt_Ebginnering.ipynb](Module2/02_Prompt_Ebginnering.ipynb) - practice zero-shot, few-shot, chain-of-thought, tree-of-thought, and stateful prompting.
+- [03_Seniment_Analysis.ipynb](Module2/03_Seniment_Analysis.ipynb) - classify patient/caregiver review sentiment and extract emotional signals.
+- [04_Text_Summarization.ipynb](Module2/04_Text_Summarization.ipynb) - summarize doctor-patient conversations into structured clinical notes.
 
-### Learning Progression
+### Module 3
 
-This repository is structured as a progressive learning path from foundational LLM concepts through advanced agentic systems:
+Use `Module3/Part1` for the active RAG build labs:
 
-**Module 1 → Module 2 → Module 3 → Module 4 → Project**
+- [01_Read Pdf File.ipynb](Module3/Part1/01_Read%20Pdf%20File.ipynb) - load and extract research PDF text with LangChain.
+- [02_DataChunking.ipynb](Module3/Part1/02_DataChunking.ipynb) - compare fixed, recursive, sentence-based, and semantic chunking.
+- [03_DocumentEmbeddings.ipynb](Module3/Part1/03_DocumentEmbeddings.ipynb) - generate Word2Vec and OpenAI-compatible embeddings.
+- [04_ChromaDB Data Retrieval and Re-ranking in RAG.ipynb](Module3/Part1/04_ChromaDB%20Data%20Retrieval%20and%20Re-ranking%20in%20RAG.ipynb) - build semantic and hybrid retrieval with ChromaDB, BM25, and LLM reranking.
+- [05_TalkToData.ipynb](Module3/Part1/05_TalkToData.ipynb) - assemble a conversational RAG pipeline over healthcare research content.
 
-Each module builds on the previous, introducing new concepts and techniques incrementally.
+Use `Module3/Part2` for RAG evaluation:
 
-### Module 1: Foundations
-Foundation concepts including LLM fundamentals, LangChain basics, and provider setup for Module 2-4 labs. Provides utilities (`repo_path()`, `setup_mlflow_tracing()`) used across all modules.
+- [RAG_Evaluation_SinglePDF.ipynb](Module3/Part2/RAG_Evaluation_SinglePDF.ipynb) - evaluate retrieval and generation quality on one focused PDF.
+- [RAG_Evaluation_MultiplePDF.ipynb](Module3/Part2/RAG_Evaluation_MultiplePDF.ipynb) - compare multi-PDF retrieval, noise, faithfulness, hallucination, and G-Eval behavior.
 
-### Module 2: RAG Basics
-Introduction to OpenAI-compatible APIs, prompt engineering, sentiment analysis, and text summarization using retrieval-augmented generation patterns. First executable notebooks with basic LLM applications.
+`Module3/Module2` and `Module3/Module5` contain legacy mirrors of the same curriculum.
 
-### Module 3: Advanced RAG with ChromaDB
-Deep dive into document processing, embeddings, vector storage with ChromaDB, retrieval ranking, and comprehensive RAG evaluation techniques for single and multiple documents. Builds production-ready RAG systems.
+### Module 4
 
-### Module 4: Agentic AI
-Building intelligent agents using the ReAct framework with LangGraph. Progressively construct **HealthBuddy**, a healthcare assistant that demonstrates:
-- Tool-use agents with web/PubMed search and doctor recommendations
-- Multi-user conversational AI with session management
-- Multi-agent systems with inter-agent communication
-- Advanced reasoning and decision-making patterns
+- [01_ImplementingToolsForAgenticAI.ipynb](Module4/01_ImplementingToolsForAgenticAI.ipynb) - define tools, inspect tool-call requests, and manually execute tool responses.
+- [02_BuildingToolsReactAgenticAIBuiltin.ipynb](Module4/02_BuildingToolsReactAgenticAIBuiltin.ipynb) - build HealthBuddy with LangGraph's `create_react_agent`.
+- [03_BuildingToolsReactAgenticAIScratch.ipynb](Module4/03_BuildingToolsReactAgenticAIScratch.ipynb) - recreate the ReAct loop with explicit LangGraph state, nodes, and edges.
+- [04_BuildingMultiUserConversationalAgenticAI.ipynb](Module4/04_BuildingMultiUserConversationalAgenticAI.ipynb) - add multi-turn memory, multi-user sessions, appointment slots, and booking tools.
+- [05_BuildingMultiAgentSystem.ipynb](Module4/05_BuildingMultiAgentSystem.ipynb) - coordinate specialist agents for HR, Finance, and IT SOP questions.
 
-### Project: Insurance Agent Validation
-End-to-end implementation of an intelligent insurance validation agent with multi-agent coordination, performance comparison against human validators, and comprehensive metrics reporting.
+### Project
 
-## LiteLLM AI Gateway
+- [code.ipynb](Project/code.ipynb) - build a healthcare insurance claim approval agent with patient summarization, policy guideline interpretation, coverage evaluation, validation benchmarking, and final submission export.
 
-The notebooks use OpenAI-compatible client settings, so they can call either a direct provider endpoint or a LiteLLM AI Gateway. When `USE_LITELLM=1`, use:
+## Shared Conventions
 
-- `OPENAI_BASE_URL` for the LiteLLM gateway URL, usually `http://0.0.0.0:4000`
-- `LITELLM_MASTER_KEY` for the gateway key
-- `CHAT_MODEL_NAME` for chat/completion calls
-- `EMBEDDING_MODEL_NAME` for embedding calls
-
-This lets the same notebook code switch between providers such as OpenAI-compatible, Groq, OpenRouter, or similar deployments through a gateway configuration instead of rewriting notebook logic.
-
-## MLflow Tracing
-
-The Module2, Module3, Module4, and Project lab notebooks include an initial setup cell that enables MLflow tracing through `Module1/notebook_utils.py` via `setup_mlflow_tracing(...)`. Use the quick setup command above to start the local MLflow server before running notebooks.
-
-By default, notebooks use `http://127.0.0.1:5000`. Each notebook writes to a separate MLflow experiment named after its module or project path. If MLflow is not running, the helper skips experiment selection and the notebook can continue.
-
-## Path Handling
-
-Notebook file paths now use `repo_path(...)` from `Module1/notebook_utils.py` instead of shell working-directory assumptions. This keeps data, setup, and cache paths stable when notebooks are opened from different locations.
-
-## Current Dependency Baseline
-
-The dependency files were refreshed to near-latest compatible versions. Important pins include:
-
-- `openai==2.40.0`
-- `mlflow==3.13.0`
-- `langchain==1.3.4`
-- `langchain-community==0.4.2`
-- `langchain-openai==1.2.2`
-- `langgraph==1.2.4`
-- `chromadb==1.5.9`
-- `pandas==2.3.3`
-
-`pandas` remains on the latest compatible 2.x release because MLflow 3.13 requires `pandas<3`.
-
-## Modules & Content
-
-### **Module 1: Foundations**
-Introductory examples covering basic LLM concepts and LangChain fundamentals.
-
-### **Module 2: RAG Basics**
-Retrieve documents and generate answers with:
-- OpenAI Connection setup
-- Prompt Engineering
-- Sentiment Analysis on Patient Reviews
-- Text Summarization on conversation datasets
-
-### **Module 3: Advanced RAG with ChromaDB**
-- Document embedding and chunking strategies
-- ChromaDB data retrieval and re-ranking
-- PDF processing and RAG evaluation
-- Single and multi-PDF RAG systems
-
-### **Module 4: Agentic AI**
-Building intelligent agents with tools:
-- React Agents (with/without built-in tools)
-- Multi-user Conversational AI
-- Multi-Agent Systems
-- Tool implementation for agents
-
-## Project: Insurance Agent Validation
-
-End-to-end project implementing an intelligent insurance validation agent:
-- **Data**: Insurance policies, reference codes, test records
-- **Features**:
-  - Multi-agent validation workflow
-  - Human vs Agent performance comparison
-  - Comprehensive test result analysis
-  - Validation accuracy metrics
-
-**Key Files**:
-- `code.ipynb` - Complete implementation
-- `validation_records.json` - Test dataset
-- `agent_validation_records_results.csv` - Agent results
-- `human_vs_agent_comparison.csv` - Performance comparison
+- `repo_path(...)` keeps notebook data paths stable regardless of where Jupyter is launched.
+- `setup_mlflow_tracing(...)` creates per-notebook MLflow experiments under `llm-rag-agents-gateway-labs/...`.
+- ChromaDB and DeepEval cache files are local development artifacts used by the RAG labs.
+- Module 2 contains two historical filename typos: `02_Prompt_Ebginnering.ipynb` and `03_Seniment_Analysis.ipynb`. The links use the actual filenames.
 
 ## Resources
 
-- [LangChain Docs](https://python.langchain.com/) - Agent and RAG framework
-- [LangGraph Docs](https://langchain-ai.github.io/langgraph/) - Graph-based orchestration
-- [MLflow Docs](https://mlflow.org/docs/latest/) - Tracing and monitoring
-- [OpenAI Python SDK](https://github.com/openai/openai-python) - LLM access
-- [ChromaDB Docs](https://docs.trychroma.com/) - Vector database
-- [uv Package Manager](https://github.com/astral-sh/uv) - Fast Python packaging
-- [LiteLLM Docs](https://docs.litellm.ai/) - Multi-provider routing
-
-## Overall Goals
-
-This repository aims to provide a comprehensive learning experience for building production-quality LLM applications:
-
-1. **Foundation**: Understand LLM concepts and basic integration
-2. **Retrieval**: Master RAG systems for context-aware generation
-3. **Intelligence**: Build reasoning agents that use tools effectively
-4. **Scale**: Implement multi-agent systems for complex tasks
-5. **Evaluation**: Benchmark agent performance against human baselines
-6. **Flexibility**: Support multiple LLM providers through LiteLLM gateway
-
-By completing this progression, learners will be equipped to:
-- Design and implement LLM applications from scratch
-- Build production-ready RAG systems
-- Create intelligent agents with tool use
-- Evaluate and optimize system performance
-- Route requests through multiple providers
-- Monitor and trace system behavior
+- [LangChain Docs](https://python.langchain.com/) - RAG and agent framework
+- [LangGraph Docs](https://langchain-ai.github.io/langgraph/) - graph-based orchestration
+- [MLflow Docs](https://mlflow.org/docs/latest/) - tracing and monitoring
+- [OpenAI Python SDK](https://github.com/openai/openai-python) - OpenAI-compatible client usage
+- [ChromaDB Docs](https://docs.trychroma.com/) - vector database
+- [DeepEval Docs](https://docs.confident-ai.com/) - RAG and LLM evaluation
+- [LiteLLM Docs](https://docs.litellm.ai/) - multi-provider routing
