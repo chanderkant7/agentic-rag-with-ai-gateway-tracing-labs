@@ -1,149 +1,92 @@
 # Module 4: Agentic AI
 
-## Overview
+Module 4 builds from basic tool calling to full LangGraph agent systems. The main healthcare assistant, HealthBuddy, starts with custom tools and grows into a ReAct agent with conversation memory, multi-user sessions, doctor appointment tools, and then a separate multi-agent SOP assistant.
 
-This module covers building intelligent agents that can reason, plan, and use tools to solve complex problems. Learn ReAct agents, multi-agent systems, and conversational AI with tool use. The notebooks now use current LangChain package imports, repository-relative paths, and localhost MLflow tracing.
+## Lab Sequence
 
-## Module Contents
+| Order | Notebook | What you build |
+| --- | --- | --- |
+| 1 | [01_ImplementingToolsForAgenticAI.ipynb](01_ImplementingToolsForAgenticAI.ipynb) | Custom health tools and manual LLM tool-call execution. |
+| 2 | [02_BuildingToolsReactAgenticAIBuiltin.ipynb](02_BuildingToolsReactAgenticAIBuiltin.ipynb) | A HealthBuddy ReAct agent using LangGraph's `create_react_agent`. |
+| 3 | [03_BuildingToolsReactAgenticAIScratch.ipynb](03_BuildingToolsReactAgenticAIScratch.ipynb) | The same ReAct workflow built from explicit LangGraph state, nodes, and edges. |
+| 4 | [04_BuildingMultiUserConversationalAgenticAI.ipynb](04_BuildingMultiUserConversationalAgenticAI.ipynb) | A multi-user conversational HealthBuddy with memory, slots, and bookings. |
+| 5 | [05_BuildingMultiAgentSystem.ipynb](05_BuildingMultiAgentSystem.ipynb) | A multi-agent SOP assistant with classifier, retriever, answer generator, and supervisor agents. |
 
-### 1. **1_ImplementingToolsForAgenticAI.ipynb**
-- Understanding tool/function definitions
-- Tool schema and signatures
-- Tool validation and error handling
-- Integrating custom tools with LLMs
+## HealthBuddy Progression
 
-### 2. **2_BuildingToolsReactAgenticAIBuiltin.ipynb**
-- ReAct (Reasoning + Acting) pattern
-- Using built-in LangChain tools
-- Tool selection strategies
-- Observation and refinement loops
+The first four notebooks progressively build a healthcare assistant that can:
 
-### 3. **03_BuildingToolsReactAgenticAIScratch.ipynb**
-- Building the **HealthBuddy** agentic AI system from scratch using ReAct framework
-- Creating custom tools: Web Search, PubMed Search, and Doctor Recommendation
-- Designing state schemas using TypedDict and message management
-- Building LangGraph nodes and edges for agent orchestration
-- Implementing multi-step reasoning and tool-use loops
-- Vector database integration with ChromaDB for semantic search
-- Streaming agent output and debugging tool invocations
-- Understanding agent limitations and multi-turn conversation challenges
+- Search simulated web content for general health information
+- Search simulated PubMed content for medical research
+- Recommend doctors based on symptoms or specialties
+- List doctors and available appointment slots
+- Book appointments after collecting patient details
+- Maintain independent memory for multiple users
 
-### 4. **04_BuildingMultiUserConversationalAgenticAI.ipynb**
-- Multi-user conversation management
-- Session and context handling
-- User-specific tool access controls
-- Conversation persistence
+The tools use local JSON data and ChromaDB-backed retrieval to simulate production-style tool use without depending on live external search APIs.
 
-### 5. **05_BuildingMultiAgentSystem.ipynb**
-- Multi-agent coordination
-- Agent specialization and roles
-- Inter-agent communication
-- Consensus and conflict resolution
+## Notebook Details
 
-## Core Concepts
+### 01: Tools and Tool Calling
 
-### ReAct Framework
-```
-Thought → Action → Observation → Thought → ... → Final Answer
-```
+You define focused tools, register them with an LLM, inspect tool call requests, and manually execute tool responses. The homework asks you to add a simple healthcare tool such as a BMI calculator, medication lookup, or symptom checker.
 
-### Agent Loop
-1. **Input**: User query or task
-2. **Thought**: Agent reasons about the problem using system instructions
-3. **Action**: Agent selects and executes appropriate tools
-4. **Observation**: Agent processes tool output and refines response
-5. **Repeat** until task is complete or answer is ready
-6. **Output**: Final response with reasoning explanation
+### 02: Built-in ReAct Agent
 
-### HealthBuddy System
-The module progressively builds **HealthBuddy**, a healthcare assistant that:
-- Answers health queries by searching web and PubMed databases
-- Recommends appropriate doctors based on symptoms
-- Manages multi-turn conversations with context awareness
-- Coordinates multiple specialized agents
-- Handles multi-user interactions with isolated memory contexts
+You use LangGraph's `create_react_agent()` to connect HealthBuddy tools into a ReAct loop. The agent reasons about a query, selects a tool, observes tool output, and continues until it can answer.
 
-## Key Technologies
+### 03: ReAct from Scratch
 
-- **LangChain and LangGraph**: Agent framework, graph orchestration, and execution
-- **OpenAI or compatible models**: LLM access via OpenAI-compatible API
-- **ChromaDB**: Vector database for semantic search and retrieval
-- **Tool Definitions**: Structured tool specifications with @tool decorator
-- **State Management**: TypedDict and message handling for agent state
-- **Memory Systems**: Conversation and context management
-- **MLflow**: Tracing and monitoring for model calls and chains
+You rebuild the same workflow with `StateGraph`, a `TypedDict` state schema, explicit nodes, conditional edges, `ToolNode`, and routing logic. This makes the agent loop easier to customize and debug.
 
-## Learning Objectives
+### 04: Multi-User Conversational Agent
 
-- Understand agent reasoning and planning
-- Design and implement effective tools
-- Build ReAct agents for complex tasks
-- Create multi-agent systems
-- Handle multi-user scenarios
-- Debug and optimize agent behavior
+You add conversation memory with user-specific session IDs, appointment availability tools, booking state, and multi-turn interaction tests. The homework extends HealthBuddy with an insurance eligibility checker tool.
+
+### 05: Multi-Agent SOP Assistant
+
+The final notebook shifts to an enterprise SOP assistant. A supervisor routes work across specialized agents:
+
+- `intent_classifier_agent` classifies HR, Finance, or IT queries.
+- `sop_retriever_agent` fetches the relevant SOP entry.
+- `answer_generator_agent` turns policy text into a clear response.
+- The supervisor manages the workflow until the task is complete.
+
+## Data and Assets
+
+- `Data/search_data.json` - simulated web and PubMed-like health content.
+- `Data/sop_documents.json` - HR, Finance, and IT SOP entries for the multi-agent assistant.
+- `Data/tool_calling.png`, `Data/tool_use_agent.png`, `Data/conversational_agent.png`, and `Data/multi_agent.png` - notebook diagrams.
+- `Data/*_arch.png` - architecture diagrams used in the notebooks.
 
 ## Running the Notebooks
 
 1. Activate your virtual environment from the repository root.
-2. Run the Module 4 setup notebook once:
-```bash
-jupyter notebook Module4/.setup/learner_setup.ipynb
-```
-3. Configure API keys in `.env`.
-4. Follow notebooks sequentially.
+2. Configure `.env` with `OPENAI_API_KEY`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME`.
+3. Run [`.setup/learner_setup.ipynb`](.setup/learner_setup.ipynb).
+4. Run the notebooks in order.
 
-The setup notebook installs:
+For a manual install from the repository root:
 
 ```bash
-uv pip install -r Module4/module4/2/requirements.txt -c Module4/module4/2/constraints.txt
+uv pip install -r Module4/module4/2/shim.txt -c Module4/module4/2/constraints.txt
 ```
 
-Current key package pins include `langchain==1.3.4`, `langchain-community==0.4.2`, `langchain-openai==1.2.2`, `langchain-text-splitters==1.1.2`, `chromadb==1.5.9`, `langgraph==1.2.4`, `tenacity==9.1.4`, and `mlflow==3.13.0`.
+Key packages include `langchain`, `langchain-community`, `langchain-openai`, `langchain-chroma`, `langgraph`, `chromadb`, `tenacity`, and `mlflow`.
 
-## LiteLLM AI Gateway
+## Gateway and Tracing
 
-Module 4 agent notebooks can route chat model calls through LiteLLM using the OpenAI-compatible `OPENAI_BASE_URL`. Set `USE_LITELLM=1`, `LITELLM_MASTER_KEY`, and `CHAT_MODEL_NAME` in `.env` when running through the gateway. Embedding-backed examples can also use `EMBEDDING_MODEL_NAME`.
+Module 4 notebooks read `OPENAI_API_KEY`, `OPENAI_BASE_URL`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME` from `.env`. Set `OPENAI_BASE_URL` to a LiteLLM gateway URL when routing calls through LiteLLM.
 
-## MLflow and Paths
+Start MLflow from the repository root if you want traces. Module 4 notebooks create experiments under `llm-rag-agents-gateway-labs/Module4/...`.
 
-Each lab notebook has an `Initial setup` cell that enables tracing through `Module1/notebook_utils.py` via `setup_mlflow_tracing(...)`. Data and cache paths use `repo_path(...)`.
+## Learning Outcomes
 
-Start MLflow from the repository root before running notebooks if you want traces captured:
+By the end of Module 4, you should be able to:
 
-```bash
-mlflow server \
-  --host 127.0.0.1 \
-  --port 5000 \
-  --backend-store-uri sqlite:///mlflow.db \
-  --default-artifact-root ./mlruns
-```
-
-Open the MLflow UI at `http://127.0.0.1:5000`. Module 4 notebooks create separate experiments under names like `llm-rag-agents-gateway-labs/Module4/<notebook-name>`.
-
-If the server is not running, the setup helper skips experiment selection and the notebook continues. You can also override the tracking URI by setting `MLFLOW_TRACKING_URI` before running a notebook.
-
-## Data
-
-`Data/search_data.json` - Sample data for search operations
-`Data/sop_documents.json` - Standard Operating Procedures for agent reference
-
-## Agent Design Patterns
-
-- **ReAct**: Reasoning + Action
-- **Tool-Use**: Function calling with structured outputs
-- **Chain of Thought**: Explicit reasoning steps
-- **Self-Reflection**: Agent evaluation and correction
-- **Hierarchical**: Master agent coordinating sub-agents
-
-## Best Practices
-
-- Design tools with clear, focused purposes
-- Provide detailed tool descriptions
-- Handle edge cases and errors gracefully
-- Log agent decisions for debugging
-- Test with diverse inputs
-- Monitor cost and latency
-
-## Next Steps
-
-Apply these concepts in the **Project: Insurance Agent Validation** to build a production system that validates insurance policies using an intelligent agent.
+- Design tools with clear schemas and responsibilities
+- Understand LLM tool-call requests and tool responses
+- Build ReAct agents with LangGraph
+- Implement custom graph-based agent loops
+- Add multi-turn and multi-user memory
+- Coordinate multiple task-specific agents with a supervisor
