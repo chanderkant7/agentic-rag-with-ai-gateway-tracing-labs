@@ -40,7 +40,8 @@ Those setup notebooks install from the matching `requirements.txt` and `constrai
 To set up the LiteLLM AI Gateway with the Admin UI and Master Key locally without Docker, follow these exact steps.
 
 #### Prerequisites
-You must have a PostgreSQL database running locally on your machine. LiteLLM requires it to track user spend, virtual keys, and UI configurations.
+
+#### You must have a PostgreSQL database running locally on your machine. LiteLLM requires it to track user spend, virtual keys, and UI configurations.
 ------------------------------
 #### Step 1: Install LiteLLM
 Install the proxy server package using python pip:
