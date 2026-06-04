@@ -1,118 +1,79 @@
-# Module 2: RAG Basics
+# Module 2: LLM Workflow Basics
 
-## Overview
+Module 2 introduces practical OpenAI-compatible LLM workflows before the deeper RAG and agent labs. The notebooks cover client setup, prompt design, sentiment analysis on patient/caregiver text, and clinical dialogue summarization.
 
-This module introduces core LLM workflows and early RAG-adjacent patterns using OpenAI-compatible APIs. The notebooks now include initial setup cells for repository-relative paths and localhost MLflow tracing.
+## Lab Sequence
 
-## Module Contents
+| Order | Notebook | What you build |
+| --- | --- | --- |
+| 1 | [01_OpenAI_Connection.ipynb](01_OpenAI_Connection.ipynb) | A configured OpenAI-compatible chat and embedding client using `.env` values and MLflow tracing. |
+| 2 | [02_Prompt_Ebginnering.ipynb](02_Prompt_Ebginnering.ipynb) | Prompt patterns including zero-shot, few-shot, chain-of-thought, tree-of-thought, and stateful communication. |
+| 3 | [03_Seniment_Analysis.ipynb](03_Seniment_Analysis.ipynb) | A structured sentiment workflow for patient and caregiver posts, classifying negative, neutral, and positive emotion signals. |
+| 4 | [04_Text_Summarization.ipynb](04_Text_Summarization.ipynb) | A clinical conversation summarizer that turns doctor-patient dialogue into concise, structured notes. |
 
-### 1. **01_OpenAI_Connection.ipynb**
-- Setting up OpenAI API access
-- Authentication and configuration
-- Testing basic completion requests
-- Understanding API response structures
+The second and third notebook filenames contain historical spelling mistakes in the repository. Use the filenames shown above.
 
-### 2. **02_Prompt_Engineering.ipynb**
-- Crafting effective prompts for LLMs
-- Few-shot learning and chain-of-thought techniques
-- Temperature, top_p, and parameter tuning
-- Prompt optimization strategies and anti-patterns
+## Notebook Details
 
-### 3. **03_Sentiment_Analysis.ipynb**
-- Building sentiment classifiers with LLMs
-- Using Patient_Reviews.csv dataset for real-world classification
-- Multi-class sentiment classification (positive, negative, neutral)
-- Evaluation metrics for classification tasks
+### OpenAI Connection
 
-### 4. **04_Text_Summarization.ipynb**
-- Abstractive and extractive summarization
-- Using conversation datasets
-- Implementing RAG for context-aware summaries
-- Quality metrics for summarization
+The first notebook verifies environment loading, OpenAI-compatible client construction, model selection, response inspection, retries, and basic chat/embedding calls.
 
-## Data Files
+### Prompt Engineering
 
-- `Data/SentimentAnalysis/Patient_Reviews.csv` - Patient review dataset
-- `Data/TextSummarization/conversation_*.txt` - Conversation samples for summarization
+This notebook demonstrates how prompt structure affects model behavior:
 
-## Learning Objectives
+- Zero-shot instructions for direct classification or routing
+- Few-shot examples for domain-specific decisions
+- Chain-of-thought style decomposition for reasoning tasks
+- Tree-of-thought style exploration for multiple candidate paths
+- Stateful communication patterns for multi-turn interactions
 
-- Set up OpenAI-compatible API clients and authentication
-- Master prompt engineering techniques for better LLM outputs
-- Build text classification systems using LLMs
-- Implement summarization pipelines with context awareness
-- Handle different data formats (text files, CSV)
-- Integrate retrieval patterns into generation workflows
-- Understand API response structures and error handling
-- Evaluate output quality and refine prompts iteratively
+### Sentiment Analysis
 
-## Prerequisites
+The sentiment notebook uses `Data/SentimentAnalysis/Patient_Reviews.csv`, which contains patient and caregiver text from healthcare communities. The task is to classify each post or review as negative, neutral, or positive and extract more specific emotional signals such as grief, relief, joy, or concern.
 
-- Completion of Module 1
-- Basic prompt design knowledge
-- OpenAI API key or compatible endpoint credentials
+### Text Summarization
+
+The summarization notebook uses doctor-patient conversation files from `Data/TextSummarization/`. It starts with a basic summary prompt, then refines the prompt into a structured clinical note that captures symptoms, diagnosis, treatment details, and follow-up context.
+
+## Data
+
+- `Data/SentimentAnalysis/Patient_Reviews.csv` - patient and caregiver review text for sentiment classification.
+- `Data/TextSummarization/conversation_*.txt` - clinical dialogue samples for summarization.
 
 ## Running the Notebooks
 
 1. Activate your virtual environment from the repository root.
-2. Ensure `.env` has the API keys used by the notebooks.
-3. Run `Module2/.setup/learner_setup.ipynb` once for the environment.
-4. Open Jupyter:
-```bash
-jupyter notebook
-```
-5. Follow notebooks in order.
+2. Copy `.env.example` to `.env` and set `OPENAI_API_KEY`, `CHAT_MODEL_NAME`, and any gateway values.
+3. Run [`.setup/learner_setup.ipynb`](.setup/learner_setup.ipynb).
+4. Open the notebooks in the order listed above.
 
-The setup notebook installs:
+For a manual install from the repository root:
 
 ```bash
-uv pip install -r Module2/module2/2/requirements.txt -c Module2/module2/2/constraints.txt
+uv pip install -r Module2/module2/2/shim.txt -c Module2/module2/2/constraints.txt
 ```
 
-Current key package pins include `openai==2.40.0`, `httpx==0.28.1`, `pandas==2.3.3`, `pydantic==2.13.4`, `python-dotenv==1.2.2`, `tenacity==9.1.4`, and `mlflow==3.13.0`.
+Key packages include `openai`, `httpx`, `pandas`, `pydantic`, `python-dotenv`, `tenacity`, and `mlflow`.
 
-## LiteLLM AI Gateway
+## Gateway and Tracing
 
-Module 2 notebooks read `OPENAI_BASE_URL`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME` from `.env`, so the same OpenAI-compatible code can call a direct provider or a LiteLLM AI Gateway.
+The notebooks read these values from `.env`:
 
-Use the gateway settings from the root `.env.example`:
+- `OPENAI_API_KEY`
+- `OPENAI_BASE_URL`
+- `CHAT_MODEL_NAME`
+- `EMBEDDING_MODEL_NAME`
 
-```env
-LITELLM_MASTER_KEY="sk-xxxxxxxx"
-OPENAI_BASE_URL="http://0.0.0.0:4000"
-CHAT_MODEL_NAME="groq/openai/gpt-oss-20b"
-EMBEDDING_MODEL_NAME="openrouter/openai/text-embedding-3-small"
-USE_LITELLM=1
-```
+Set `OPENAI_BASE_URL` to a LiteLLM gateway URL when routing through the gateway. Start MLflow from the repository root if you want traces; each notebook creates a separate experiment under `llm-rag-agents-gateway-labs/Module2/...`.
 
-## MLflow and Paths
+## Learning Outcomes
 
-Each lab notebook has an `Initial setup` cell that imports `Module1/notebook_utils.py`, enables MLflow tracing, and uses `repo_path(...)` for data paths.
+By the end of Module 2, you should be able to:
 
-Start MLflow from the repository root before running notebooks if you want traces captured:
-
-```bash
-mlflow server \
-  --host 127.0.0.1 \
-  --port 5000 \
-  --backend-store-uri sqlite:///mlflow.db \
-  --default-artifact-root ./mlruns
-```
-
-Open the MLflow UI at `http://127.0.0.1:5000`. Module 2 notebooks create separate experiments under names like `llm-rag-agents-gateway-labs/Module2/<notebook-name>`.
-
-If the server is not running, the setup helper skips experiment selection and the notebook continues. You can also override the tracking URI by setting `MLFLOW_TRACKING_URI` before running a notebook.
-
-## Key Concepts
-
-- **API Integration**: Authentication, rate limiting, and error handling with OpenAI-compatible endpoints
-- **Prompt Design**: Structuring prompts for better model behavior and output quality
-- **Few-Shot Learning**: Providing examples to guide model behavior
-- **Classification**: Using LLMs for text categorization and sentiment analysis
-- **Summarization**: Creating concise summaries while preserving key information
-- **Context Windows**: Understanding token limits and managing input length
-- **Temperature & Sampling**: Controlling randomness and determinism in outputs
-
-## Next Steps
-
-Progress to **Module 3: Advanced RAG with ChromaDB** for production-ready vector databases and advanced retrieval techniques.
+- Configure OpenAI-compatible chat and embedding clients
+- Design prompts for classification, reasoning, and summarization
+- Use structured outputs for downstream processing
+- Evaluate whether prompt changes improve task quality
+- Prepare for retrieval workflows in Module 3
