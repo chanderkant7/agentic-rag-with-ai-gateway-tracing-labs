@@ -1,82 +1,55 @@
 # Module 1: Foundations
 
-## Overview
+Module 1 is the orientation layer for the notebook labs. It introduces the environment, provider configuration, shared utilities, and the LLM concepts learners need before running the hands-on notebooks in Modules 2-4 and the capstone project.
 
-This module covers foundational Large Language Model (LLM) concepts, provider integration, and the lab environment setup before hands-on RAG and Agentic AI labs in Modules 2-4. The repository contains documentation and utility functions for later modules; executable notebook labs begin in Module 2.
+There are no executable lab notebooks in this module. The first runnable labs begin in [Module 2](../Module2/README.md).
 
-## Learning Objectives
+## What This Module Covers
 
-- Understand how LLMs work at a conceptual level
-- Learn the lab environment and infrastructure used by later modules
-- Understand provider integration and API authentication
-- Build simple LLM applications using LangChain
-- Master prompting techniques and model behavior control
-- Set up development environments and dependencies
-- Configure and use MLflow for tracing
+- How LLMs process prompts, tokens, context windows, and generated outputs
+- Why embeddings matter for retrieval and semantic search
+- How OpenAI-compatible chat and embedding clients are configured
+- How LiteLLM can route the same notebook code to different providers
+- How MLflow tracing is wired into later notebooks
+- How repository-relative paths keep notebooks portable
 
-## Getting Started
+## Shared Utilities
 
-1. Create and activate a virtual environment from the repository root:
+[notebook_utils.py](notebook_utils.py) provides two helpers used throughout the repository:
+
+- `repo_path(...)`: builds absolute paths from the repository root, so notebooks can load data reliably from any working directory.
+- `setup_mlflow_tracing(...)`: sets the MLflow tracking URI, selects a per-notebook experiment, and enables OpenAI and LangChain autologging when those packages are available.
+
+## Setup
+
+Create and activate an environment from the repository root:
+
 ```bash
 uv venv .venv
-source .venv/bin/activate  # Linux/macOS
-# or
-.venv\Scripts\activate     # Windows
+source .venv/bin/activate
 ```
 
-2. Configure API keys in a `.env` file at the repository root (copy from `.env.example`):
+On Windows:
+
+```bash
+uv venv .venv
+.venv\Scripts\activate
+```
+
+Copy the root [`.env.example`](../.env.example) to `.env` and provide the values your notebooks should use:
+
 ```env
 OPENAI_API_KEY="sk-xxxxxxxx"
-OPENAI_BASE_URL="https://api.openai.com/v1"
-CHAT_MODEL_NAME="gpt-4o-mini"
-EMBEDDING_MODEL_NAME="text-embedding-3-small"
+OPENAI_BASE_URL="http://127.0.0.1:4000"
+CHAT_MODEL_NAME="groq/llama-3.1-8b-instant"
+EMBEDDING_MODEL_NAME="openrouter/openai/text-embedding-3-small"
 ```
 
-3. Continue to Module 2 for the first executable lab notebooks and run `Module2/.setup/learner_setup.ipynb` before those labs.
+For direct OpenAI-compatible provider calls, leave `OPENAI_BASE_URL` unset if you want the SDK default. For LiteLLM, set it to the gateway URL.
 
-## Prerequisites
+## Optional MLflow Tracing
 
-- Python 3.10+ recommended
-- Basic Python knowledge
-- API key for at least one LLM provider (OpenAI recommended)
-- Familiarity with terminal/command line
-- Jupyter Notebook or VS Code environment
-
-## Module Contents
-
-This module provides foundational knowledge and utilities:
-
-- **Concepts**: How LLMs work, tokens, context windows, model behavior
-- **LangChain Basics**: Prompts, model calls, chains, retrieval basics
-- **Provider Setup**: Authentication, API keys, environment variables
-- **Utilities**: `notebook_utils.py` with `repo_path()` and `setup_mlflow_tracing()`
-- **Simple Applications**: Basic chatbots, Q&A systems, text generation examples
-
-## Key Concepts
-
-- **Tokens**: Discrete units of text processed by LLMs
-- **Context Window**: Maximum number of tokens an LLM can process
-- **Embeddings**: Dense vector representations of text
-- **Prompt Engineering**: Crafting inputs to get desired outputs
-- **Chain of Thought**: Encouraging step-by-step reasoning
-- **Few-Shot Learning**: Providing examples to guide behavior
-- **Temperature & Sampling**: Controlling randomness in outputs
-
-## Utilities
-
-The `Module1/notebook_utils.py` provides helper functions used across all modules:
-
-- `repo_path(...)`: Construct paths relative to repository root (supports any working directory)
-- `setup_mlflow_tracing(...)`: Configure MLflow tracing with proper experiment naming
-- Environment loading and variable management
-
-These utilities ensure notebooks work correctly regardless of where they're opened from.
-
-## MLflow Tracing
-
-Module 1 is documentation-only in this repository, so there are no Module 1 notebook traces to capture. The executable labs starting in Module 2 include `Initial setup` cells that call `setup_mlflow_tracing(...)` from `Module1/notebook_utils.py`.
-
-When you move to Module 2 or later, start the local MLflow server from the repository root before running notebooks:
+Start MLflow from the repository root before running later notebooks if you want traces:
 
 ```bash
 mlflow server \
@@ -86,12 +59,8 @@ mlflow server \
   --default-artifact-root ./mlruns
 ```
 
-Open the MLflow UI at `http://127.0.0.1:5000` to inspect traces and experiments.
+Executable notebooks in later modules use `http://127.0.0.1:5000` by default. If MLflow is unavailable, the helper logs a skip message and lets the notebook continue.
 
-## LiteLLM AI Gateway
+## Next Step
 
-Executable labs from Module 2 onward can route OpenAI-compatible calls through a LiteLLM AI Gateway. Configure the root `.env` from `.env.example` with `USE_LITELLM=1`, `OPENAI_BASE_URL`, `LITELLM_MASTER_KEY`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME` when you want the gateway path.
-
-## Next Steps
-
-After completing Module 1, proceed to **Module 2: RAG Basics** to learn about Retrieval-Augmented Generation.
+Continue with [Module 2: LLM Workflow Basics](../Module2/README.md) to run the first notebooks: API connection, prompt engineering, patient sentiment analysis, and clinical conversation summarization.
