@@ -1,236 +1,107 @@
-# Project: Insurance Agent Validation System
+# Project: Healthcare Insurance Claim Approval Agent
 
-## Overview
+This capstone notebook builds an agentic healthcare insurance claim approval system. The agent interprets patient records, retrieves and summarizes policy guidelines, checks coverage criteria, compares its decisions with human reference results, and generates a final submission file.
 
-An end-to-end implementation of an intelligent insurance validation agent that automatically validates insurance policies against reference codes and benchmarks performance against human validators. The project notebook now uses current LangChain/LangGraph dependencies, repository-relative paths, and localhost MLflow tracing.
+## Project Objective
 
-## Project Objectives
+Build a transparent claim approval assistant that can:
 
-- Build a multi-agent system for policy validation
-- Compare agent performance with human validators
-- Measure accuracy, precision, recall, and F1-score
-- Generate comprehensive validation reports
-- Demonstrate enterprise-grade agent architecture
+- Interpret semi-structured patient health records and submitted claims
+- Translate ICD-10 and CPT codes into human-readable clinical context
+- Reason over policy guidelines and coverage restrictions
+- Decide whether a claim should be `APPROVE` or `ROUTE FOR REVIEW`
+- Explain each decision with evidence from the patient record and policy
+- Benchmark agent decisions against human validation results
 
-## Key Files
+## Main Notebook
 
-### Main Implementation
-- **code.ipynb** - Complete agent implementation and validation workflow
-
-### Data Files
-- `Data/insurance_policies.json` - Insurance policy documents to validate
-- `Data/reference_codes.json` - Reference validation codes and rules
-- `Data/test_records.json` - Test cases for validation
-- `Data/validation_records.json` - Ground truth validation results
-
-### Results & Analysis
-- **agent_validation_records_results.csv** - Agent validation outputs
-- **human_vs_agent_comparison.csv** - Performance comparison metrics
-- **comparison_summary_stats.csv** - Statistical summary
-- **submission.csv** - Final submission format
-- **validation_reference_results.csv** - Expected results
+- [code.ipynb](code.ipynb) - complete implementation, validation, comparison, and final test processing workflow.
 
 ## Architecture
 
-### Components
+The notebook implements a single ReAct-style agent with three required tools:
 
-1. **Policy Parser**
-   - Extracts policy information
-   - Validates document structure
-   - Handles multiple policy formats
+| Tool | Purpose |
+| --- | --- |
+| `summarize_patient_record(record_str)` | Extract demographics, patient age at service, diagnoses, procedures, policy ID, preauthorization status, and billed amount. |
+| `summarize_policy_guideline(policy_id)` | Interpret the relevant insurance policy, including covered procedures, required diagnoses, age/gender restrictions, and preauthorization rules. |
+| `check_claim_coverage(record_summary, policy_summary)` | Compare the patient summary against policy rules and produce an approval or manual-review decision with reasoning. |
 
-2. **Reference Code Engine**
-   - Loads and indexes reference codes
-   - Matches policies to codes
-   - Applies validation rules
+The agent is instructed to use the tools in sequence: patient analysis, policy analysis, then final coverage evaluation.
 
-3. **Validation Agent**
-   - Reasons about policy details
-   - Uses tools for code lookup
-   - Generates validation verdicts
+## Workflow
 
-4. **Performance Analyzer**
-   - Compares agent vs human results
-   - Calculates metrics
-   - Generates reports
-
-## Validation Metrics
-
-### Performance Metrics
-- **Accuracy**: Percentage of correct validations
-- **Precision**: True positives / (TP + FP)
-- **Recall**: True positives / (TP + FN)
-- **F1-Score**: Harmonic mean of precision and recall
-
-### Efficiency Metrics
-- **Latency**: Average validation time per policy
-- **Cost**: API calls and token usage
-- **Throughput**: Policies processed per minute
-
-## How to Run
-
-1. **Setup Environment**
-```bash
-source .venv/bin/activate
-jupyter notebook Project/.setup/learner_setup.ipynb
+```text
+Patient claim record
+  -> Patient record summarization
+  -> Policy guideline summarization
+  -> Coverage evaluation
+  -> APPROVE or ROUTE FOR REVIEW
+  -> Human-vs-agent comparison
+  -> Final submission export
 ```
 
-The setup notebook installs:
+## Data Files
 
-```bash
-uv pip install -r Project/project/2/requirements.txt -c Project/project/2/constraints.txt
-```
+All source data lives under [Data](Data):
 
-2. **Configure Credentials**
-   - Add API keys to `.env` file
-   - Ensure OpenAI or  OpenAI credentials are available for the notebook cells you run
+- `insurance_policies.json` - insurance policy documents and coverage rules.
+- `reference_codes.json` - ICD-10 diagnosis codes and CPT procedure codes.
+- `validation_records.json` - development records for validation and refinement.
+- `validation_reference_results.csv` - human reference decisions for validation comparison.
+- `test_records.json` - final records used to generate `submission.csv`.
+- `claim_approver_agent_arch.png` - architecture diagram used by the notebook.
+- `claim_approver_agent_flow.png` - workflow diagram used by the notebook.
 
-3. **Run Validation**
-```bash
-jupyter notebook code.ipynb
-```
+## Generated Outputs
 
-4. **Analyze Results**
-   - Review CSV files in project root
-   - Compare agent vs human performance
-   - Check validation_reference_results.csv
+The notebook writes these files when the relevant cells are run:
 
-## Project Workflow
+- `agent_validation_records_results.csv` - agent outputs on validation records.
+- `human_vs_agent_comparison.csv` - detailed human-vs-agent comparison.
+- `comparison_summary_stats.csv` - summary metrics from the comparison.
+- `submission.csv` - final predictions for the test records with `patient_id` and `generated_response`.
 
-```
-Insurance Policies
-       ↓
-   Policy Parser
-       ↓
-Reference Code Lookup
-       ↓
-Validation Agent (ReAct)
-       ↓
-Generate Verdict
-       ↓
-Compare with Human Results
-       ↓
-Generate Report
-```
+These outputs are generated artifacts and may not exist until you run the notebook.
 
-## Expected Outputs
+## Evaluation
 
-1. **Validation Results**
-   - Policy ID
-   - Predicted validation code
-   - Confidence score
-   - Reasoning explanation
+The validation section compares agent decisions against human reference results and supports:
 
-2. **Comparison Report**
-   - Agent accuracy vs human accuracy
-   - Agreement rates
-   - Disagreement analysis
-   - Performance statistics
+- Case-by-case agreement review
+- False positive and false negative analysis
+- Approval vs review distribution checks
+- Summary statistics for decision quality
+- Manual inspection of disagreement patterns
 
-3. **Submission File**
-   - Formatted for evaluation
-   - Contains all validation verdicts
+The goal is not just to produce a label, but to produce an auditable decision path that explains why the claim was approved or routed for review.
 
-## Key Technologies
+## Running the Project
 
-- **LangChain and LangGraph**: Agent framework and graph orchestration
-- **OpenAI or compatible models**: LLM access via OpenAI-compatible API
-- **Pandas**: Data analysis and CSV handling
-- **ChromaDB and rank-bm25**: Retrieval and ranking support
-- **MLflow**: Local tracing for model and chain calls
-- **JSON**: Data storage and configuration
+1. Complete Modules 1-4 or be comfortable with RAG, tool calling, and LangGraph ReAct agents.
+2. Activate your virtual environment from the repository root.
+3. Configure `.env` with `OPENAI_API_KEY`, `CHAT_MODEL_NAME`, and any gateway values.
+4. Run [`.setup/learner_setup.ipynb`](.setup/learner_setup.ipynb).
+5. Open [code.ipynb](code.ipynb) and run the workflow from top to bottom.
 
-Current key package pins include `openai==2.40.0`, `httpx==0.28.1`, `pandas==2.3.3`, `chromadb==1.5.9`, `langchain==1.3.4`, `langchain-community==0.4.2`, `langchain-openai==1.2.2`, `langgraph==1.2.4`, and `mlflow==3.13.0`.
-
-## LiteLLM AI Gateway
-
-The project notebook reads gateway-aware settings from `.env`, including `OPENAI_BASE_URL`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME`. Use `USE_LITELLM=1` and `LITELLM_MASTER_KEY` from the root `.env.example` when routing validation-agent calls through a LiteLLM AI Gateway.
-
-## MLflow and Paths
-
-Each notebook has an `Initial setup` cell that enables tracing through `Module1/notebook_utils.py` via `setup_mlflow_tracing(...)`. Data paths use `repo_path(...)` for consistency across environments.
-
-Start MLflow from the repository root before running notebooks if you want traces captured:
+For a manual install from the repository root:
 
 ```bash
-mlflow server \
-  --host 127.0.0.1 \
-  --port 5000 \
-  --backend-store-uri sqlite:///mlflow.db \
-  --default-artifact-root ./mlruns
+uv pip install -r Project/project/2/shim.txt -c Project/project/2/constraints.txt
 ```
 
-Open the MLflow UI at `http://127.0.0.1:5000`. Project notebooks create separate experiments under `llm-rag-agents-gateway-labs/Project/<notebook-name>`.
+Key packages include `openai`, `pandas`, `langchain`, `langchain-openai`, `langgraph`, `chromadb`, `rank-bm25`, and `mlflow`.
 
-## Key Concepts
+## Gateway and Tracing
 
-- **Multi-Agent Orchestration**: Coordinating multiple specialized agents
-- **Tool Integration**: Using retrieval and lookup tools effectively
-- **ReAct Framework**: Structuring agent reasoning and action cycles
-- **Performance Evaluation**: Benchmarking against human validators
-- **Error Analysis**: Understanding agent failure modes
-- **Reproducibility**: Tracking runs with MLflow
+The project reads `OPENAI_API_KEY`, `OPENAI_BASE_URL`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME` from `.env`. Set `OPENAI_BASE_URL` to a LiteLLM gateway URL when routing calls through LiteLLM.
 
-## Prerequisites
+Start MLflow from the repository root if you want traces. The project creates an experiment under `llm-rag-agents-gateway-labs/Project/code`.
 
-- Completion of Modules 1-4
-- Understanding of RAG systems (Module 3)
-- Experience with agent development (Module 4)
-- API keys for LLM access
-- Local MLflow server (optional but recommended)
+## Extension Ideas
 
-The project notebook has an `Initial setup` cell that enables tracing through `Module1/notebook_utils.py` via `setup_mlflow_tracing(...)`. File paths use `repo_path(...)`, which avoids duplicated folder names when the notebook working directory changes.
-
-Start MLflow from the repository root before running the project if you want traces captured:
-
-```bash
-mlflow server \
-  --host 127.0.0.1 \
-  --port 5000 \
-  --backend-store-uri sqlite:///mlflow.db \
-  --default-artifact-root ./mlruns
-```
-
-Open the MLflow UI at `http://127.0.0.1:5000`. The project notebook creates an experiment named `llm-rag-agents-gateway-labs/Project/code`.
-
-If the server is not running, the setup helper skips experiment selection and the notebook continues. You can also override the tracking URI by setting `MLFLOW_TRACKING_URI` before running the notebook.
-
-## Challenges & Solutions
-
-### Challenge: Policy Complexity
-**Solution**: Multi-step reasoning with tool use to break down complex validations
-
-### Challenge: Reference Code Matching
-**Solution**: Vector similarity search combined with exact matching
-
-### Challenge: Handling Edge Cases
-**Solution**: Fallback strategies and error handling in agent loop
-
-## Performance Targets
-
-- **Accuracy**: >90% vs ground truth
-- **Agent vs Human**: Within 5% of human performance
-- **Latency**: <5 seconds per policy
-- **Cost**: <$0.10 per policy validation
-
-## Lessons Learned
-
-- Agent design significantly impacts accuracy
-- Tool definition quality is critical
-- Multiple validation passes improve results
-- Hybrid approaches (agent + rules) work best
-
-## Deployment Considerations
-
-- Scale to thousands of policies
-- Real-time validation API
-- Audit trail and explainability
-- Continuous learning from human feedback
-- Cost optimization strategies
-
-## Next Steps
-
-- Integrate with production systems
-- Set up monitoring and alerting
-- Implement feedback loops
-- Scale to full policy database
+- Add more policy edge cases and disagreement categories.
+- Introduce retrieval over longer policy documents instead of direct JSON lookup.
+- Add confidence calibration and threshold-based manual review.
+- Turn the notebook workflow into a service with audit logging.
+- Add monitoring for cost, latency, and decision drift.
