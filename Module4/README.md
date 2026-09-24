@@ -1,6 +1,14 @@
 # Module 4: Agentic AI
 
-Module 4 builds from basic tool calling to full LangGraph agent systems. The main healthcare assistant, HealthBuddy, starts with custom tools and grows into a ReAct agent with conversation memory, multi-user sessions, doctor appointment tools, and then a separate multi-agent SOP assistant.
+Module 4 is where the model stops only answering and starts acting. You begin with basic tool calling and grow into full LangGraph agent systems. The main healthcare assistant, HealthBuddy, starts with a few custom tools and becomes a ReAct agent with conversation memory, multi-user sessions, and doctor appointment tools. The module closes with a separate multi-agent SOP assistant.
+
+One idea runs through every notebook: good agents come from well-designed tools and clear boundaries, not from giving the model free rein.
+
+## Read the Articles
+
+- [Module 4 Intro: From Chatbots to Agents That Use Tools](https://chanderkant-sharma.medium.com/module-4-intro-from-chatbots-to-agents-that-use-tools-848d84b62a6e)
+- [Module 4.1: Tools, ReAct, and Agent Loops](https://chanderkant-sharma.medium.com/module-4-1-tools-react-and-agent-loops-1fc5334d5b14)
+- [Module 4.2: Multi-user and Multi-agent Systems](https://chanderkant-sharma.medium.com/module-4-2-multi-user-and-multi-agent-systems-e45f19a14bb3)
 
 ## Lab Sequence
 
@@ -90,3 +98,7 @@ By the end of Module 4, you should be able to:
 - Implement custom graph-based agent loops
 - Add multi-turn and multi-user memory
 - Coordinate multiple task-specific agents with a supervisor
+
+## Next Step
+
+You are ready for the capstone: the [Healthcare Insurance Claim Approval Agent](../Project/README.md), which brings prompts, retrieval, tools, agents, metrics, and a comparison with human decisions together in one workflow.

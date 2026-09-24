@@ -1,83 +1,81 @@
-# RAG and Agentic AI Labs
+# RAG and Agentic AI Labs: Blog Series
 
-This folder contains Medium.com-ready blog drafts for the lab series. The tone is practical, warm, and conversational, aimed at India-based tech learners, engineers, and builders who want to move from LLM basics to RAG, agents, and a capstone validation project without feeling lost in jargon.
+This folder holds the Markdown source for the blog series that walks through these labs. Every post is published on Medium, and the drafts here are kept in sync with the published versions, so you can read on whichever side you prefer.
 
-Each post includes:
+The series is written for India-based developers, data engineers, ML engineers, architects, and students who want a guided route from their first clean LLM call to a traced, measured claim approval agent. Each post picks up where the previous one left off.
 
-- A Medium-style title
-- Subtitle text near the top
-- Suggested tags
-- Internal series navigation links
-- Repository documentation links where useful
+## Reading Order
 
-## Publishing Order
 
-### Series Landing Post
-- [Main Intro: RAG and Agentic AI Labs](Intro.md)
+### Series overview
+
+| Post | Read on Medium | Markdown draft |
+| --- | --- | --- |
+| RAG and Agentic AI Labs with LiteLLM AI Gateway & MLflow Tracing | [Medium](https://chanderkant-sharma.medium.com/rag-and-agentic-ai-labs-with-litellm-ai-gateway-mlflow-tracing-b2c33dd7d399) | [Intro.md](Intro.md) |
 
 ### Module 1: Foundations
-- [Intro: Why This AI Learning Path Matters](module1/intro.md)
-- [Module 1.1: LLM Foundations Without the Hype](module1/part-1.md)
-- [Module 1.2: From Prompts to Real Applications](module1/part-2.md)
 
-### Module 2: RAG Basics
-- [Intro: Your First Practical LLM Workflow](module2/intro.md)
-- [Module 2.1: Connecting to OpenAI and Writing Better Prompts](module2/part-1.md)
-- [Module 2.2: Sentiment Analysis and Summarization That Feel Useful](module2/part-2.md)
+| Post | Read on Medium | Markdown draft |
+| --- | --- | --- |
+| Module 1 Intro: Why This AI Learning Path Matters | [Medium](https://chanderkant-sharma.medium.com/module-1-intro-why-this-ai-learning-path-matters-5c83e617be30) | [module1/intro.md](module1/intro.md) |
+| Module 1.1: LLM Foundations Without the Hype | [Medium](https://chanderkant-sharma.medium.com/module-1-1-llm-foundations-without-the-hype-94c07a745c19) | [module1/part-1.md](module1/part-1.md) |
+| Module 1.2: From Prompts to Real Applications | [Medium](https://chanderkant-sharma.medium.com/module-1-2-from-prompts-to-real-applications-4acdc6ba9338) | [module1/part-2.md](module1/part-2.md) |
+
+### Module 2: LLM Workflow Basics
+
+| Post | Read on Medium | Markdown draft |
+| --- | --- | --- |
+| Module 2 Intro: Your First Practical LLM Workflow | [Medium](https://chanderkant-sharma.medium.com/module-2-intro-your-first-practical-llm-workflow-b767002d5fd2) | [module2/intro.md](module2/intro.md) |
+| Module 2.1: Connecting to OpenAI-Compatible APIs and Writing Better Prompts | [Medium](https://chanderkant-sharma.medium.com/module-2-1-connecting-to-openai-compatible-apis-and-writing-better-prompts-dc3c8c55f4ec) | [module2/part-1.md](module2/part-1.md) |
+| Module 2.2: Sentiment Analysis and Summarization That Feel Useful | [Medium](https://chanderkant-sharma.medium.com/module-2-2-sentiment-analysis-and-summarization-that-feel-useful-95f1b11e4af9) | [module2/part-2.md](module2/part-2.md) |
 
 ### Module 3: Advanced RAG with ChromaDB
-- [Intro: Why RAG Gets Serious After the First Demo](module3/intro.md)
-- [Module 3.1: PDFs, Chunking, Embeddings, and ChromaDB](module3/part-1.md)
-- [Module 3.2: Retrieval, Re-ranking, and RAG Evaluation](module3/part-2.md)
+
+| Post | Read on Medium | Markdown draft |
+| --- | --- | --- |
+| Module 3 Intro: Why RAG Gets Serious After the First Demo | [Medium](https://chanderkant-sharma.medium.com/module-3-intro-why-rag-gets-serious-after-the-first-demo-6ce1283631c3) | [module3/intro.md](module3/intro.md) |
+| Module 3.1: PDFs, Chunking, Embeddings, and ChromaDB | [Medium](https://chanderkant-sharma.medium.com/module-3-1-pdfs-chunking-embeddings-and-chromadb-e878da4be031) | [module3/part-1.md](module3/part-1.md) |
+| Module 3.2: Retrieval, Re-ranking, and RAG Evaluation | [Medium](https://chanderkant-sharma.medium.com/module-3-2-retrieval-re-ranking-and-rag-evaluation-1001b93b1c41) | [module3/part-2.md](module3/part-2.md) |
 
 ### Module 4: Agentic AI
-- [Intro: From Chatbots to Agents That Use Tools](module4/intro.md)
-- [Module 4.1: Tools, ReAct, and Agent Loops](module4/part-1.md)
-- [Module 4.2: Multi-user and Multi-agent Systems](module4/part-2.md)
 
-### Sample Project: Insurance Agent Validation
-- [Sample Project Intro: Building an Insurance Validation Agent](project/intro.md)
-- [Sample Project Part 1: Designing the Validation Workflow](project/part-1.md)
-- [Sample Project Part 2: Measuring Agent Performance Against Humans](project/part-2.md)
+| Post | Read on Medium | Markdown draft |
+| --- | --- | --- |
+| Module 4 Intro: From Chatbots to Agents That Use Tools | [Medium](https://chanderkant-sharma.medium.com/module-4-intro-from-chatbots-to-agents-that-use-tools-848d84b62a6e) | [module4/intro.md](module4/intro.md) |
+| Module 4.1: Tools, ReAct, and Agent Loops | [Medium](https://chanderkant-sharma.medium.com/module-4-1-tools-react-and-agent-loops-1fc5334d5b14) | [module4/part-1.md](module4/part-1.md) |
+| Module 4.2: Multi-user and Multi-agent Systems | [Medium](https://chanderkant-sharma.medium.com/module-4-2-multi-user-and-multi-agent-systems-e45f19a14bb3) | [module4/part-2.md](module4/part-2.md) |
+
+### Sample Project: Healthcare Insurance Claim Approval
+
+| Post | Read on Medium | Markdown draft |
+| --- | --- | --- |
+| Sample Project Intro: Building a Healthcare Insurance Claim Approval Agent | [Medium](https://chanderkant-sharma.medium.com/sample-project-intro-building-a-healthcare-insurance-claim-approval-agent-a1e3915b712a) | [project/intro.md](project/intro.md) |
+| Sample Project Part 1: Designing the Healthcare Claim Approval Workflow | [Medium](https://chanderkant-sharma.medium.com/sample-project-part-1-designing-the-healthcare-claim-approval-workflow-1b6dbf3a5cc4) | [project/part-1.md](project/part-1.md) |
+| Sample Project Part 2: Measuring Agent Performance Against Humans | [Medium](https://chanderkant-sharma.medium.com/sample-project-part-2-measuring-agent-performance-against-humans-2f4c03798b72) | [project/part-2.md](project/part-2.md) |
+
+## What Each Post Includes
+
+- A title and subtitle that match the published Medium post
+- Suggested tags for Medium
+- A link to this repository and a short LiteLLM setup note
+- Notebook snippets taken from the matching lab, with the notebook path named above each snippet
+- A short feedback prompt specific to that post
+- Series navigation to the previous and next posts, the series overview, and the module README
 
 ## Visual Assets
 
-The blog drafts use diagrams and architecture images from `blogs/assets/`. When publishing on Medium, keep the image markdown as-is after the GitHub repository is public, or upload the same assets manually if Medium does not fetch an external image.
+Diagrams live in [`assets/`](assets/) and are referenced through GitHub raw URLs, so they render both on GitHub and on Medium.
 
 ## Voice Notes
 
-- Write like a senior teammate is walking the reader through the lab, not like a manual is announcing features.
-- Keep the technical claims precise, but use lived examples where they help: broken notebooks, client demos, messy PDFs, support tickets, and evaluation surprises.
-- Prefer short, direct transitions over generic phrases such as "this article explores" or "in conclusion."
-- Make feedback requests specific to each article so the ending feels personal instead of repeated.
+These are the writing principles the series follows. They are worth keeping if you add a new post:
 
-## Medium.com Publishing Notes
+- Write like a senior teammate walking someone through the lab, not like a manual announcing features.
+- Keep technical claims precise, and use lived examples where they help: broken notebooks, client demos, messy PDFs, support tickets, and evaluation surprises.
+- Open each post by connecting it to the one before, and close by pointing to the one after.
+- Prefer short, direct transitions over phrases like "this article explores" or "in conclusion."
+- Make every feedback request specific to the post, so the ending feels personal rather than repeated.
 
-### Pre-Publishing Checklist
-- **Tags**: Use the tags from each post's YAML header. Primary tags: `Generative AI`, `RAG`, `LangChain`, `MLflow`, `AI Agents`, `LiteLLM`
-- **Subtitle**: Each post has a `Subtitle:` line—use it and remove the label
-- **Images**: Verify all images load from GitHub raw URLs or replace with Medium-hosted versions
-- **Code Blocks**: Review formatting after pasting into Medium
-- **Links**: All relative repo links will need to be replaced with live Medium URLs after publication
+## Keeping Drafts and Medium in Sync
 
-### Publishing Order
-Follow this sequence so "Previous" and "Next" navigation stays correct:
-
-1. [Main Intro: RAG and Agentic AI Labs](Intro.md)
-2. [Module 1 Intro](module1/intro.md) → [Part 1](module1/part-1.md) → [Part 2](module1/part-2.md)
-3. [Module 2 Intro](module2/intro.md) → [Part 1](module2/part-1.md) → [Part 2](module2/part-2.md)
-4. [Module 3 Intro](module3/intro.md) → [Part 1](module3/part-1.md) → [Part 2](module3/part-2.md)
-5. [Module 4 Intro](module4/intro.md) → [Part 1](module4/part-1.md) → [Part 2](module4/part-2.md)
-6. [Project Intro](project/intro.md) → [Part 1](project/part-1.md) → [Part 2](project/part-2.md)
-
-### Formatting Guidelines
-- **First paragraph**: Keep punchy—Medium shows this in previews
-- **Code examples**: Include context about which notebook the code comes from
-- **AI Gateway note**: Include in all technical posts (already embedded)
-- **Call-to-action**: End with a question or reflection specific to each topic
-- **Links back**: Consider linking to the full repository at the end
-
-### After Publication
-- Replace all Medium.com author links with live post URLs: [chanderkant-sharma.medium.com](https://chanderkant-sharma.medium.com)
-- Update navigation links between posts with live Medium URLs
-- Update repo's [.env.example](.env.example) with any new configuration examples
+When you edit a post, update both the Markdown draft and the Medium post. Inside the drafts, keep series navigation pointing at the full Medium URLs, including the post ID at the end, because Medium does not resolve the shorter slug-only links.

@@ -1,6 +1,14 @@
 # Project: Healthcare Insurance Claim Approval Agent
 
-This capstone notebook builds an agentic healthcare insurance claim approval system. The agent interprets patient records, retrieves and summarizes policy guidelines, checks coverage criteria, compares its decisions with human reference results, and generates a final submission file.
+This capstone brings the whole series together. The agent interprets patient claim records, summarizes the relevant policy guidelines, checks coverage criteria, and decides whether to approve a claim or route it for review. Then comes the honest part: its decisions are compared with human reference results before it generates a final submission file.
+
+The core lesson is simple. In business workflows, a fluent explanation is not enough. Decisions have to be correct, traceable, and measurable.
+
+## Read the Articles
+
+- [Sample Project Intro: Building a Healthcare Insurance Claim Approval Agent](https://chanderkant-sharma.medium.com/sample-project-intro-building-a-healthcare-insurance-claim-approval-agent-a1e3915b712a)
+- [Sample Project Part 1: Designing the Healthcare Claim Approval Workflow](https://chanderkant-sharma.medium.com/sample-project-part-1-designing-the-healthcare-claim-approval-workflow-1b6dbf3a5cc4)
+- [Sample Project Part 2: Measuring Agent Performance Against Humans](https://chanderkant-sharma.medium.com/sample-project-part-2-measuring-agent-performance-against-humans-2f4c03798b72)
 
 ## Project Objective
 
@@ -74,11 +82,11 @@ The validation section compares agent decisions against human reference results 
 - Summary statistics for decision quality
 - Manual inspection of disagreement patterns
 
-The goal is not just to produce a label, but to produce an auditable decision path that explains why the claim was approved or routed for review.
+The goal is not just to produce a label, but to produce an auditable decision path that explains why the claim was approved or routed for review. Even a high accuracy score deserves a close look at its failures: that is usually where the next improvement to a tool, policy summary, or prompt is hiding.
 
 ## Running the Project
 
-1. Complete Modules 1-4 or be comfortable with RAG, tool calling, and LangGraph ReAct agents.
+1. Complete [Modules 1-4](../README.md#learning-path), or be comfortable with RAG, tool calling, and LangGraph ReAct agents.
 2. Activate your virtual environment from the repository root.
 3. Configure `.env` with `OPENAI_API_KEY`, `CHAT_MODEL_NAME`, and any gateway values.
 4. Run [`.setup/learner_setup.ipynb`](.setup/learner_setup.ipynb).

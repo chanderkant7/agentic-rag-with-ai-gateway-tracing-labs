@@ -1,6 +1,10 @@
 # RAG and Agentic AI using LangChain, LiteLLM AI Gateway, and MLflow
 
-This repository is a notebook-based learning path for building LLM applications, retrieval-augmented generation (RAG) systems, tool-using agents, multi-agent workflows, and a healthcare insurance claim approval capstone. The labs use OpenAI-compatible clients, optional LiteLLM AI Gateway routing, repository-relative file paths, and optional localhost MLflow tracing.
+A hands-on, notebook-based path from your first clean LLM call to a traced, measured healthcare insurance claim approval agent. Along the way you build prompt workflows, retrieval-augmented generation (RAG) with ChromaDB, tool-using agents, and multi-agent systems, one working notebook at a time.
+
+The labs are built to be forgiving on a normal laptop: OpenAI-compatible clients, optional LiteLLM AI Gateway routing, repository-relative file paths that work wherever you launch Jupyter, and optional local MLflow tracing so you can see what every model call and agent step actually did.
+
+📖 **Prefer to read first?** Every module has a companion article. Start with the [series overview on Medium](https://chanderkant-sharma.medium.com/rag-and-agentic-ai-labs-with-litellm-ai-gateway-mlflow-tracing-b2c33dd7d399), or browse the Markdown versions in [`blogs/`](blogs/README.md).
 
 ## Quick Start
 
@@ -44,7 +48,7 @@ LITELLM_MASTER_KEY="sk-xxxxxxxx"
 STORE_MODEL_IN_DB=True
 ```
 
-For direct provider access, omit `OPENAI_BASE_URL` if your SDK should use its default endpoint. For LiteLLM, point `OPENAI_BASE_URL` at the running gateway.
+For direct provider access, omit `OPENAI_BASE_URL` if your SDK should use its default endpoint. For LiteLLM, point `OPENAI_BASE_URL` at the running gateway. Never commit your real `.env`; it is already listed in `.gitignore`.
 
 ### Install Lab Dependencies
 
@@ -57,7 +61,7 @@ Each executable module has a setup notebook. Run the matching setup notebook bef
 | Module 4 | `Module4/.setup/learner_setup.ipynb` | `Module4/module4/2/shim.txt` |
 | Project | `Project/.setup/learner_setup.ipynb` | `Project/project/2/shim.txt` |
 
-The setup notebooks install the pinned packages for that module and then restart the notebook kernel.
+The setup notebooks install the pinned packages for that module and then restart the notebook kernel. Pinning matters more than it sounds: when one person runs the labs locally, another on Databricks, and another on a locked-down corporate laptop, a shared package baseline saves a lot of "works on my machine" debugging.
 
 ## Local Services
 
@@ -86,17 +90,19 @@ mlflow server \
   --default-artifact-root ./mlruns
 ```
 
-Open the MLflow UI at `http://127.0.0.1:5000`. If the server is not running, the notebooks skip experiment selection and continue.
+Open the MLflow UI at `http://127.0.0.1:5000`. If the server is not running, the notebooks skip experiment selection and carry on, so tracing is always optional.
 
 ## Learning Path
 
-| Step | Area | Focus |
-| --- | --- | --- |
-| 1 | [Module 1: Foundations](Module1/README.md) | LLM concepts, environment setup, provider configuration, and shared notebook utilities |
-| 2 | [Module 2: LLM Workflow Basics](Module2/README.md) | OpenAI-compatible clients, prompt engineering, patient sentiment analysis, and clinical dialogue summarization |
-| 3 | [Module 3: Advanced RAG with ChromaDB](Module3/README.md) | PDF loading, chunking, embeddings, ChromaDB retrieval, reranking, chat-over-docs, and DeepEval RAG evaluation |
-| 4 | [Module 4: Agentic AI](Module4/README.md) | Tool calling, ReAct agents, HealthBuddy, multi-user conversation memory, appointment booking, and multi-agent SOP assistance |
-| 5 | [Project: Healthcare Insurance Claim Approval Agent](Project/README.md) | ReAct-based claim approval, policy reasoning, validation against human references, and submission generation |
+Each step builds on the one before it. If you are new to LLM apps, go in order; if you already know the basics, jump straight to Module 3 for RAG or Module 4 for agents.
+
+| Step | Area | Focus | Read the articles |
+| --- | --- | --- | --- |
+| 1 | [Module 1: Foundations](Module1/README.md) | LLM concepts, environment setup, provider configuration, and shared notebook utilities | [Intro](https://chanderkant-sharma.medium.com/module-1-intro-why-this-ai-learning-path-matters-5c83e617be30) · [1.1](https://chanderkant-sharma.medium.com/module-1-1-llm-foundations-without-the-hype-94c07a745c19) · [1.2](https://chanderkant-sharma.medium.com/module-1-2-from-prompts-to-real-applications-4acdc6ba9338) |
+| 2 | [Module 2: LLM Workflow Basics](Module2/README.md) | OpenAI-compatible clients, prompt engineering, patient sentiment analysis, and clinical dialogue summarization | [Intro](https://chanderkant-sharma.medium.com/module-2-intro-your-first-practical-llm-workflow-b767002d5fd2) · [2.1](https://chanderkant-sharma.medium.com/module-2-1-connecting-to-openai-compatible-apis-and-writing-better-prompts-dc3c8c55f4ec) · [2.2](https://chanderkant-sharma.medium.com/module-2-2-sentiment-analysis-and-summarization-that-feel-useful-95f1b11e4af9) |
+| 3 | [Module 3: Advanced RAG with ChromaDB](Module3/README.md) | PDF loading, chunking, embeddings, ChromaDB retrieval, reranking, chat-over-docs, and DeepEval RAG evaluation | [Intro](https://chanderkant-sharma.medium.com/module-3-intro-why-rag-gets-serious-after-the-first-demo-6ce1283631c3) · [3.1](https://chanderkant-sharma.medium.com/module-3-1-pdfs-chunking-embeddings-and-chromadb-e878da4be031) · [3.2](https://chanderkant-sharma.medium.com/module-3-2-retrieval-re-ranking-and-rag-evaluation-1001b93b1c41) |
+| 4 | [Module 4: Agentic AI](Module4/README.md) | Tool calling, ReAct agents, HealthBuddy, multi-user conversation memory, appointment booking, and multi-agent SOP assistance | [Intro](https://chanderkant-sharma.medium.com/module-4-intro-from-chatbots-to-agents-that-use-tools-848d84b62a6e) · [4.1](https://chanderkant-sharma.medium.com/module-4-1-tools-react-and-agent-loops-1fc5334d5b14) · [4.2](https://chanderkant-sharma.medium.com/module-4-2-multi-user-and-multi-agent-systems-e45f19a14bb3) |
+| 5 | [Project: Healthcare Insurance Claim Approval Agent](Project/README.md) | ReAct-based claim approval, policy reasoning, validation against human references, and submission generation | [Intro](https://chanderkant-sharma.medium.com/sample-project-intro-building-a-healthcare-insurance-claim-approval-agent-a1e3915b712a) · [Part 1](https://chanderkant-sharma.medium.com/sample-project-part-1-designing-the-healthcare-claim-approval-workflow-1b6dbf3a5cc4) · [Part 2](https://chanderkant-sharma.medium.com/sample-project-part-2-measuring-agent-performance-against-humans-2f4c03798b72) |
 
 ## Notebook Map
 
@@ -139,8 +145,9 @@ Use `Module3/Part2` for RAG evaluation:
 ## Shared Conventions
 
 - `repo_path(...)` keeps notebook data paths stable regardless of where Jupyter is launched.
-- `setup_mlflow_tracing(...)` creates per-notebook MLflow experiments under `llm-rag-agents-gateway-labs/...`.
-- ChromaDB and DeepEval cache files are local development artifacts used by the RAG labs.
+- `setup_mlflow_tracing(...)` creates per-notebook MLflow experiments under `llm-rag-agents-gateway-labs/...`, so prompt experiments, RAG runs, and agent traces never get mixed together.
+- ChromaDB vector stores (`*.db/` folders) are built locally the first time you run the RAG notebooks and are ignored by git. The first run creates embeddings through your configured model, so expect a few embedding calls.
+- DeepEval and tokenizer cache files are local development artifacts used by the RAG labs.
 - Module 2 contains two historical filename typos: `02_Prompt_Ebginnering.ipynb` and `03_Seniment_Analysis.ipynb`. The links use the actual filenames.
 
 ## Resources
@@ -152,3 +159,7 @@ Use `Module3/Part2` for RAG evaluation:
 - [ChromaDB Docs](https://docs.trychroma.com/) - vector database
 - [DeepEval Docs](https://docs.confident-ai.com/) - RAG and LLM evaluation
 - [LiteLLM Docs](https://docs.litellm.ai/) - multi-provider routing
+
+## Feedback
+
+If you run the labs, I would genuinely like to hear where the path felt smooth and where it slowed you down. Open an issue with what broke, what clicked, or what you would like covered next; it makes the series better for the next learner.

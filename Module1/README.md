@@ -1,8 +1,14 @@
 # Module 1: Foundations
 
-Module 1 is the orientation layer for the notebook labs. It introduces the environment, provider configuration, shared utilities, and the LLM concepts learners need before running the hands-on notebooks in Modules 2-4 and the capstone project.
+Module 1 is the warm-up. Before anything calls a model, it gives you the mental model you will lean on for the rest of the labs: how LLMs read prompts, what tokens and context windows really cost you, how provider configuration works, and the shared utilities that keep every later notebook portable and traceable.
 
-There are no executable lab notebooks in this module. The first runnable labs begin in [Module 2](../Module2/README.md).
+There are no executable lab notebooks in this module, on purpose. The first runnable labs begin in [Module 2](../Module2/README.md), and they will make a lot more sense with these ideas in place.
+
+## Read the Articles
+
+- [Module 1 Intro: Why This AI Learning Path Matters](https://chanderkant-sharma.medium.com/module-1-intro-why-this-ai-learning-path-matters-5c83e617be30)
+- [Module 1.1: LLM Foundations Without the Hype](https://chanderkant-sharma.medium.com/module-1-1-llm-foundations-without-the-hype-94c07a745c19)
+- [Module 1.2: From Prompts to Real Applications](https://chanderkant-sharma.medium.com/module-1-2-from-prompts-to-real-applications-4acdc6ba9338)
 
 ## What This Module Covers
 
@@ -17,7 +23,7 @@ There are no executable lab notebooks in this module. The first runnable labs be
 
 [notebook_utils.py](notebook_utils.py) provides two helpers used throughout the repository:
 
-- `repo_path(...)`: builds absolute paths from the repository root, so notebooks can load data reliably from any working directory.
+- `repo_path(...)`: builds absolute paths from the repository root, so notebooks can load data reliably from any working directory. No more "file not found" because a teammate opened the notebook from a different folder.
 - `setup_mlflow_tracing(...)`: sets the MLflow tracking URI, selects a per-notebook experiment, and enables OpenAI and LangChain autologging when those packages are available.
 
 ## Setup
@@ -63,4 +69,4 @@ Executable notebooks in later modules use `http://127.0.0.1:5000` by default. If
 
 ## Next Step
 
-Continue with [Module 2: LLM Workflow Basics](../Module2/README.md) to run the first notebooks: API connection, prompt engineering, patient sentiment analysis, and clinical conversation summarization.
+Continue with [Module 2: LLM Workflow Basics](../Module2/README.md) to run your first notebooks: API connection, prompt engineering, patient sentiment analysis, and clinical conversation summarization.

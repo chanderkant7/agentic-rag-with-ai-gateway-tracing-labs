@@ -1,6 +1,12 @@
 # Module 3: Advanced RAG with ChromaDB
 
-Module 3 builds a healthcare-focused RAG pipeline from document loading through evaluation. The notebooks move from PDF extraction and chunking to embeddings, ChromaDB retrieval, reranking, conversational retrieval, and DeepEval-based measurement.
+Module 3 is where LLM apps grow into knowledge systems. RAG demos are easy to love, but answer quality is usually decided by the unglamorous steps: clean PDF extraction, sensible chunks, good embeddings, retrieval that finds the right evidence, and honest evaluation. These notebooks build a healthcare-focused RAG pipeline through each of those steps, then measure it with DeepEval.
+
+## Read the Articles
+
+- [Module 3 Intro: Why RAG Gets Serious After the First Demo](https://chanderkant-sharma.medium.com/module-3-intro-why-rag-gets-serious-after-the-first-demo-6ce1283631c3)
+- [Module 3.1: PDFs, Chunking, Embeddings, and ChromaDB](https://chanderkant-sharma.medium.com/module-3-1-pdfs-chunking-embeddings-and-chromadb-e878da4be031)
+- [Module 3.2: Retrieval, Re-ranking, and RAG Evaluation](https://chanderkant-sharma.medium.com/module-3-2-retrieval-re-ranking-and-rag-evaluation-1001b93b1c41)
 
 ## Recommended Structure
 
@@ -75,6 +81,8 @@ Module 3 notebooks read `OPENAI_API_KEY`, `OPENAI_BASE_URL`, `CHAT_MODEL_NAME`, 
 
 Some notebooks set local cache and telemetry values for ChromaDB, tiktoken, and DeepEval. These settings keep repeated notebook runs faster and quieter.
 
+ChromaDB vector stores such as `Part1/chroma_healthcare.db/` and `Part2/Data/*_eval.db/` are not stored in the repository. The notebooks create them from the source PDFs on first run and reuse them afterwards, so the first run makes a small number of embedding calls through your configured model. Delete a `*.db` folder any time you want to rebuild it from scratch.
+
 Start MLflow from the repository root if you want traces. Module 3 notebooks create experiments under names like `llm-rag-agents-gateway-labs/Module3/Part1/...` and `llm-rag-agents-gateway-labs/Module3/Part2/...`.
 
 ## Learning Outcomes
@@ -88,3 +96,7 @@ By the end of Module 3, you should be able to:
 - Use reranking to reduce irrelevant context
 - Evaluate RAG systems with retrieval and generation metrics
 - Diagnose how noisy context can cause weaker or less faithful answers
+
+## Next Step
+
+Continue with [Module 4: Agentic AI](../Module4/README.md). Once you can retrieve reliable knowledge, agents can use tools and context far more intelligently.

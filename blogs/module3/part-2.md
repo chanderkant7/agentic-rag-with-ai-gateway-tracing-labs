@@ -1,28 +1,28 @@
 # Module 3.2: Retrieval, Re-ranking, and RAG Evaluation
 
-Subtitle: A RAG system is only as good as the evidence it retrieves and the discipline used to evaluate it.
+Subtitle: A RAG system is only as good as the evidence it retrieves, and the discipline you bring to evaluating it.
 
 Tags: RAG Evaluation, Retrieval, ChromaDB, MLflow, AI Engineering, LiteLLM
 
 GitHub repo: [agentic-rag-with-ai-gateway-tracing-labs](https://github.com/chanderkant7/agentic-rag-with-ai-gateway-tracing-labs/)
 
-AI Gateway note: These labs can route OpenAI-compatible calls through LiteLLM. Set `USE_LITELLM=1`, `OPENAI_BASE_URL`, `LITELLM_MASTER_KEY`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME` in `.env`; see the [`.env.example`](https://github.com/chanderkant7/agentic-rag-with-ai-gateway-tracing-labs/blob/main/.env.example).
+Quick setup note: The notebooks use OpenAI-compatible clients. If you run LiteLLM, point `OPENAI_BASE_URL` at the gateway, set `OPENAI_API_KEY`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME` in `.env`, and keep `LITELLM_MASTER_KEY` aligned with your gateway config. The details are in [`.env.example`](https://github.com/chanderkant7/agentic-rag-with-ai-gateway-tracing-labs/blob/main/.env.example).
 
 ![Retrieval and RAG evaluation diagram](https://raw.githubusercontent.com/chanderkant7/agentic-rag-with-ai-gateway-tracing-labs/main/blogs/assets/module3-rag-pipeline.png)
 
 Image: Retrieval, re-ranking, answer generation, and evaluation need to be inspected together, not as isolated steps.
 
-Once documents are embedded and stored, the next question is the one every RAG project eventually has to face: are we retrieving the right stuff?
+In Module 3.1, we did the unglamorous groundwork: clean text, sensible chunks, embeddings, and a ChromaDB collection. Now comes the question every RAG project eventually has to face: are we actually retrieving the right stuff?
 
-This is where many RAG demos start to wobble, even when the final answer sounds polished.
+This is where many RAG demos start to wobble, even when the final answer sounds perfectly polished.
 
-The model may produce a confident answer, but if the retrieved chunks were weak, irrelevant, or incomplete, the answer is built on shaky ground. Module 3.2 focuses on retrieval, re-ranking, and evaluation because these are the skills that turn RAG from a demo into an engineering workflow.
+The model can sound confident, but if the retrieved chunks were weak, irrelevant, or incomplete, the answer is standing on shaky ground. That is why this post focuses on retrieval, re-ranking, and evaluation. These are the skills that turn RAG from a demo into an engineering workflow.
 
 ## Retrieval Is Not Just Search
 
-In a RAG system, retrieval decides what context the model sees.
+In a RAG system, retrieval decides what context the model gets to see.
 
-That means retrieval controls the model's knowledge for that request.
+Which means retrieval effectively controls what the model knows for that request.
 
 If the retriever misses the key paragraph, the model may:
 
@@ -35,7 +35,7 @@ So retrieval quality matters as much as model quality. Sometimes it matters more
 
 ## Notebook Snippet: `Module3/Module2/04_ChromaDB Data Retrieval and Re-ranking in RAG.ipynb`
 
-The ChromaDB notebook stores chunks and retrieves unique semantic matches:
+The ChromaDB notebook stores chunks and retrieves unique semantic matches, skipping duplicates:
 
 ```python
 vectordb = Chroma.from_documents(
@@ -61,17 +61,17 @@ def semantic_retrieval(query, top_k=3):
 
 ## Re-ranking Helps When Top Results Are Noisy
 
-Vector search is powerful, but it is not perfect. Sometimes the top retrieved chunks are semantically close but not actually the best evidence.
+Vector search is powerful, but it is not perfect. Sometimes the top chunks are semantically close without being the best evidence.
 
-Re-ranking is a second pass that tries to order retrieved results by usefulness.
+Re-ranking is a second pass that reorders those retrieved results by how useful they really are.
 
-The idea is:
+The idea is simple:
 
 ```text
 Retrieve candidate chunks -> re-rank candidates -> pass best context to model
 ```
 
-This is especially useful when:
+It is especially helpful when:
 
 - Documents are long
 - Many chunks are similar
@@ -79,15 +79,15 @@ This is especially useful when:
 - The domain has repeated terminology
 - Multiple PDFs contain overlapping topics
 
-For enterprise documents, re-ranking often improves answer quality because the first vector search result is not always the most useful result.
+With enterprise documents, re-ranking often lifts answer quality noticeably, because the first vector search hit is not always the most useful one.
 
 ## Single-PDF Evaluation
 
-The single-PDF evaluation notebook helps you test whether your RAG system can answer questions from one document reliably.
+The single-PDF evaluation notebook checks whether your RAG system can answer questions from one document reliably.
 
-This is the right place to start because the problem is controlled. If the system fails on one document, adding more documents will not magically fix it.
+Start here, because the problem is controlled. If the system struggles with one document, adding more documents will not magically fix it.
 
-Useful questions include:
+Useful questions to ask:
 
 - Was the correct section retrieved?
 - Did the generated answer match the source?
@@ -95,7 +95,7 @@ Useful questions include:
 - Was the response too vague?
 - Did changing chunk size improve retrieval?
 
-This helps you tune the basics before scaling up.
+This helps you tune the basics properly before you scale up.
 
 ## Notebook Snippet: RAG Evaluation Notebooks
 
@@ -113,9 +113,9 @@ print(response["AI_generated_response"])
 
 ## Multi-PDF Evaluation
 
-Multi-PDF RAG is harder. Now the system must choose between multiple sources, handle overlapping concepts, and avoid mixing facts from different documents incorrectly.
+Multi-PDF RAG is harder. Now the system has to choose between sources, handle overlapping concepts, and avoid mixing facts from different documents.
 
-This is common in real Indian business use cases:
+This shows up constantly in real Indian business use cases:
 
 - Multiple policy documents
 - Multiple product manuals
@@ -123,26 +123,26 @@ This is common in real Indian business use cases:
 - Multiple SOP versions
 - Multiple customer files
 
-The evaluation challenge is not just "did it answer?" It is also "did it use the right document?"
+So the evaluation question is not just "did it answer?" It is also "did it use the right document?"
 
 ## Metrics And Human Judgment
 
-RAG evaluation can include metrics like hit rate, precision, recall, MRR, and answer correctness. But human review is still important, especially in domain-heavy use cases.
+The evaluation notebooks use DeepEval-style checks for contextual precision, contextual recall, contextual relevancy, answer relevancy, faithfulness, hallucination, and custom G-Eval judging. Even so, human review still matters, especially in domain-heavy use cases.
 
-For learning, start with practical checks:
+While you are learning, start with a few practical checks:
 
 - Is the retrieved context relevant?
 - Is the answer grounded in that context?
 - Is the answer complete enough?
 - Is the source easy to inspect?
 
-Then move toward more formal evaluation.
+Then gradually move toward more formal evaluation as your confidence grows.
 
 ## MLflow For Iteration
 
-Module 3 is where MLflow tracing becomes especially useful.
+Module 3 is where MLflow tracing really earns its place.
 
-You may test:
+You might test:
 
 - Different chunk sizes
 - Different overlap values
@@ -151,11 +151,11 @@ You may test:
 - Re-ranking on or off
 - Prompt changes
 
-Tracing helps you keep runs understandable. Without it, experiments blend together in notebook output and you end up trusting memory more than evidence.
+Tracing keeps those runs understandable. Without it, experiments blur together in notebook output, and you end up trusting your memory more than the evidence.
 
 ## Module 3 Wrap-up
 
-By the end of Module 3, you have a strong RAG foundation:
+By the end of Module 3, you have a solid RAG foundation:
 
 - Process PDFs
 - Split documents
@@ -164,14 +164,15 @@ By the end of Module 3, you have a strong RAG foundation:
 - Re-rank retrieved context
 - Evaluate single and multi-document RAG
 
-This sets up Module 4 nicely. Once you can retrieve reliable knowledge, you can build agents that use tools and context more intelligently.
+That sets up Module 4 nicely. Once you can retrieve reliable knowledge, you can build agents that use tools and context far more intelligently. The Module 4 Intro explains what changes when a model stops just answering and starts acting.
 
 ## Feedback
 
-If you tune retrieval settings, note which change actually improved the answers. Chunk size, top-k, re-ranking, and prompt wording can all feel important, but the evidence usually tells a more interesting story.
+If you tune retrieval settings, make a note of which change genuinely improved the answers. Chunk size, top-k, re-ranking, and prompt wording can all feel important, but the evidence usually tells a more interesting story.
 
 ## Series Navigation
 
-- Previous: [Module 3.1](https://chanderkant-sharma.medium.com/module-3-1-pdfs-chunking-embeddings-and-chromadb)
-- Next: [Module 4 Intro](https://chanderkant-sharma.medium.com/module-4-intro-from-chatbots-to-agents-that-use-tools)
-- Series index: [All posts](https://chanderkant-sharma.medium.com/rag-and-agentic-ai-labs-main-intro)
+- Previous: [Module 3.1](https://chanderkant-sharma.medium.com/module-3-1-pdfs-chunking-embeddings-and-chromadb-e878da4be031)
+- Next: [Module 4 Intro: From Chatbots to Agents That Use Tools](https://chanderkant-sharma.medium.com/module-4-intro-from-chatbots-to-agents-that-use-tools-848d84b62a6e)
+- Series index: [All posts](https://chanderkant-sharma.medium.com/rag-and-agentic-ai-labs-with-litellm-ai-gateway-mlflow-tracing-b2c33dd7d399)
+- Lab notebooks: [Module3 README](https://github.com/chanderkant7/agentic-rag-with-ai-gateway-tracing-labs/blob/main/Module3/README.md)

@@ -1,65 +1,67 @@
-# Sample Project Part 1: Designing the Insurance Validation Workflow
+# Sample Project Part 1: Designing the Healthcare Claim Approval Workflow
 
-Subtitle: Good agent projects start with workflow design, not with asking the model to do everything.
+Subtitle: Good agent projects start with workflow design, not one heroic prompt.
 
 Tags: AI Workflow, Agentic AI, Insurance Tech, LangGraph, LangChain, LiteLLM, MLflow
 
 GitHub repo: [agentic-rag-with-ai-gateway-tracing-labs](https://github.com/chanderkant7/agentic-rag-with-ai-gateway-tracing-labs/)
 
-AI Gateway note: These labs can route OpenAI-compatible calls through LiteLLM. Set `USE_LITELLM=1`, `OPENAI_BASE_URL`, `LITELLM_MASTER_KEY`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME` in `.env`; see the [`.env.example`](https://github.com/chanderkant7/agentic-rag-with-ai-gateway-tracing-labs/blob/main/.env.example).
+Quick setup note: The notebooks use OpenAI-compatible clients. If you run LiteLLM, point `OPENAI_BASE_URL` at the gateway, set `OPENAI_API_KEY`, `CHAT_MODEL_NAME`, and `EMBEDDING_MODEL_NAME` in `.env`, and keep `LITELLM_MASTER_KEY` aligned with your gateway config. The details are in [`.env.example`](https://github.com/chanderkant7/agentic-rag-with-ai-gateway-tracing-labs/blob/main/.env.example).
 
-![Insurance claim validation workflow diagram](https://raw.githubusercontent.com/chanderkant7/agentic-rag-with-ai-gateway-tracing-labs/main/blogs/assets/project-claim-approver-flow.png)
+![Healthcare claim approval workflow](https://raw.githubusercontent.com/chanderkant7/agentic-rag-with-ai-gateway-tracing-labs/main/blogs/assets/project-claim-approver-flow.png)
 
-Image: The project workflow moves from record and policy inputs to tool-backed validation and a final decision.
+Image: The workflow moves from patient records and policy inputs, through tool-backed claim evaluation, to a final decision.
 
-The insurance validation sample project is a useful reminder that agentic AI is still software engineering.
+The Sample Project Intro set the goal: a claim approval agent whose decisions can be traced and measured. This post is about designing it, and it comes with a gentle reminder: agentic AI is still software engineering.
 
-The model is important, but the workflow matters more.
+The model matters. The workflow matters more.
 
-If you simply paste a record into an LLM and ask "is this valid?", you may get a confident answer. But you will not necessarily get a reliable system.
+If you simply paste a claim record into an LLM and ask "should this be approved?", you may well get a confident answer. What you will not necessarily get is a reliable system.
 
-The sample project takes a more structured approach, because reliability usually comes from the shape of the workflow, not from one heroic prompt.
+So the project takes a more structured approach, because reliability usually comes from the shape of the workflow, not from one heroic prompt at the end.
 
 ## The Core Workflow
 
-The workflow looks like this:
+Here is the workflow, step by step:
 
 ```text
-Load insurance data
-Load reference codes
-Inspect validation record
-Use tools or lookup logic
-Generate agent verdict
-Store result
-Compare with expected or human result
-Calculate metrics
+Load insurance policies
+Load ICD-10 and CPT reference codes
+Load validation or test patient records
+Summarize the patient record
+Summarize the relevant policy guideline
+Evaluate coverage criteria
+Return APPROVE or ROUTE FOR REVIEW
+Store the result
+Compare with human reference decisions
 ```
 
-Each step has a job. This makes the system easier to debug.
+Every step has one job. That alone makes the system far easier to debug.
 
-If the final answer is wrong, you can ask:
+When the final answer is wrong, you can ask:
 
 - Did the record load correctly?
-- Was the right reference code available?
-- Did the agent use the correct rule?
-- Was the verdict format correct?
-- Did comparison logic work?
+- Was the patient's age at service calculated correctly?
+- Did the diagnosis or procedure code map correctly?
+- Did the policy summary include the relevant restriction?
+- Did the agent apply preauthorization rules properly?
+- Was the final decision format consistent?
 
-That is much better than staring at one giant prompt and wondering which part of it betrayed you.
+That beats staring at one giant prompt and wondering which part of it drifted.
 
-## Policy Parser
+## Patient Record Summarization
 
-The policy parser extracts useful information from the insurance data.
+The first tool pulls the useful claim information out of the patient record.
 
-In real insurance systems, this can become complex quickly. Policies may contain multiple coverage sections, exclusions, dates, riders, claim conditions, and codes.
+In real insurance systems, this gets complex quickly. Records can include demographics, dates of service, diagnoses, procedure codes, policy IDs, preauthorization status, and billed amounts.
 
-For the sample project, the parser keeps the workflow organized. It helps separate raw data handling from agent reasoning.
+For the project, `summarize_patient_record` keeps the workflow organized. It separates raw record handling from final agent reasoning.
 
-This separation is important. If parsing is wrong, the agent may reason correctly over bad input and still produce a wrong verdict.
+That separation matters. If parsing goes wrong, the agent can reason perfectly over bad input and still reach the wrong verdict.
 
 ## Notebook Snippet: `Project/code.ipynb`
 
-The sample project starts with tool-style functions that structure raw claim data:
+The project begins with tool-style functions that bring structure to raw claim data:
 
 ```python
 @tool
@@ -68,11 +70,9 @@ def summarize_patient_record(record_str: str) -> str:
     Extract and structure patient insurance claim information into
     analysis-ready format.
     """
-    # Transforms raw patient records into demographics, policy ID,
-    # diagnoses, procedure codes, and preauthorization context.
 ```
 
-It then registers the complete tool sequence:
+The full tool sequence is then registered with the agent, along with instructions that make the order mandatory:
 
 ```python
 tools = [
@@ -91,37 +91,39 @@ MANDATORY WORKFLOW:
 """
 ```
 
-## Reference Code Engine
+## Policy Guideline Summarization
 
-The reference code engine provides the rules or codes the validation depends on.
+The second tool interprets the policy rules that apply to the claim.
 
-This is where retrieval and lookup thinking from Module 3 becomes useful. The agent should not guess a reference rule. It should use available data.
+This is where the project uses the same discipline you learned in the RAG and tool-calling modules: the agent should never guess a rule. It should work from the policy data it has.
 
-In real systems, this layer may connect to:
+A good policy summary captures:
 
-- Rule databases
-- Policy documents
-- Regulatory guidelines
-- Internal SOPs
-- Product configuration tables
+- Covered procedures
+- Required diagnoses
+- Age restrictions
+- Gender restrictions
+- Preauthorization requirements
+- Any rule that affects approval
 
-The sample project keeps it notebook-friendly while preserving the concept.
+In real systems, this layer might connect to policy documents, product configuration tables, regulatory rules, or internal review manuals. The notebook keeps it JSON-based so the workflow stays easy to read.
 
-## Validation Agent
+## Coverage Evaluation
 
-The validation agent brings the reasoning step.
+The third tool is where the reasoning happens.
 
-Its job is not just to answer. Its job is to use the available context and produce a verdict with explanation.
+`check_claim_coverage` compares the patient summary against the policy summary and returns a decision.
 
-A good validation agent should:
+A good claim approval agent should:
 
 - Stay grounded in provided data
-- Use tools or lookups when needed
+- Use all required tools
 - Avoid inventing missing rules
-- Return structured outputs
-- Explain the reason for the verdict
+- Return one of the expected decisions
+- Explain the reason clearly
+- Route uncertain cases to review
 
-This is where Module 4 tool and agent patterns matter.
+This is where the Module 4 agent patterns really pay off. The LLM is not "the whole system." It is the reasoning component inside a tool-backed workflow.
 
 ## Notebook Snippet: Agent Execution Wrapper
 
@@ -150,19 +152,19 @@ def call_claim_approval_agent(
 
 ## Why Structured Outputs Matter
 
-The sample project writes results to CSV files for comparison.
+The project writes its results to CSV files so they can be compared.
 
-That means the output must be consistent enough to evaluate. If one run says "valid", another says "Approved", and another says "Looks okay", metrics become messy.
+That means the output must be consistent enough to evaluate. If one run says `APPROVE`, another says "approved", and another says "looks fine", metrics become messy.
 
-For business workflows, structure is your friend.
+For business workflows, structure is your best friend.
 
-Use labels, fields, IDs, confidence scores, and explanations consistently. That makes downstream analysis possible.
+Use labels, IDs, decision text, and explanations consistently, just as we practised back in Module 2.1. That is what makes downstream analysis possible.
 
 ## MLflow For Workflow Visibility
 
-The sample project notebook includes an `Initial setup` cell for MLflow tracing.
+The project notebook includes the same initial setup cell for MLflow tracing that you have used throughout the series.
 
-Start MLflow before running:
+Start MLflow before running it:
 
 ```bash
 mlflow server \
@@ -172,24 +174,25 @@ mlflow server \
   --default-artifact-root ./mlruns
 ```
 
-Then inspect the sample project experiment at `http://127.0.0.1:5000`.
+Then inspect the project experiment at `http://127.0.0.1:5000`.
 
-For a multi-step validation workflow, traces are useful because they help you see what happened before the final CSV output.
+For a multi-step claim approval workflow, traces are invaluable, because they show you everything that happened before the final CSV output.
 
 ## The Takeaway
 
-Part 1 of the sample project is about design discipline.
+Part 1 of the project is all about design discipline.
 
 Do not ask the model to be the whole system. Give it a workflow, tools, data, structure, and evaluation.
 
-That is how agentic AI becomes more than a demo: smaller responsibilities, clearer evidence, and outputs you can compare.
+That is how agentic AI becomes more than a demo: smaller responsibilities, clearer evidence, and outputs you can compare. In Part 2, we do exactly that, measuring the agent against human decisions.
 
 ## Feedback
 
-If you adapt this workflow to another domain, tell me which step changed first: parsing, reference lookup, validation, or comparison. That is usually where the real business logic lives.
+If you adapt this workflow to another domain, tell me which step changed first: record parsing, policy lookup, coverage evaluation, or comparison. That is usually where the real business logic lives.
 
 ## Series Navigation
 
-- Previous: [Sample Project Intro](https://chanderkant-sharma.medium.com/sample-project-intro-building-an-insurance-validation-agent)
-- Next: [Sample Project Part 2](https://chanderkant-sharma.medium.com/sample-project-part-2-measuring-agent-performance-against-humans)
-- Series index: [All posts](https://chanderkant-sharma.medium.com/rag-and-agentic-ai-labs-main-intro)
+- Previous: [Sample Project Intro](https://chanderkant-sharma.medium.com/sample-project-intro-building-a-healthcare-insurance-claim-approval-agent-a1e3915b712a)
+- Next: [Sample Project Part 2: Measuring Agent Performance Against Humans](https://chanderkant-sharma.medium.com/sample-project-part-2-measuring-agent-performance-against-humans-2f4c03798b72)
+- Series index: [All posts](https://chanderkant-sharma.medium.com/rag-and-agentic-ai-labs-with-litellm-ai-gateway-mlflow-tracing-b2c33dd7d399)
+- Lab notebooks: [Project README](https://github.com/chanderkant7/agentic-rag-with-ai-gateway-tracing-labs/blob/main/Project/README.md)
