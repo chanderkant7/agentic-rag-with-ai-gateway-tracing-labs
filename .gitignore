@@ -152,3 +152,7 @@ secrets.json
 # OS
 .DS_Store
 Thumbs.db
+
+# Local ChromaDB vector stores (rebuilt automatically by the notebooks)
+*.db/
+chroma.sqlite3
